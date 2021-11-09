@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bán vé tàu trực tuyến</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fontawesome.js"></script>
+    <script src="js/Index.js"></script>
+    <style>
+        /* Make the image fully responsive */
+        
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $(".owl-carousel").owlCarousel({
+                autoPlay: 3000,
+                items: 3,
+                itemsDesktop: [1199, 3],
+                itemsDesktopSmall: [979, 3],
+                center: true,
+                nav: true,
+                loop: true,
+                responsive: {
+                    600: {
+                        items: 3
+                    }
+
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="headertop">
+        <div style="position: fixed;width: 100%; z-index: 99;    background-color: #353232a3;">
+            <div class="container">
+                <nav class="navbar navbar-expand-sm navbar-dark">
+                    <!-- Brand -->
+                    <div style="width: 280px;">
+                        <a class="navbar-brand" href="Index.html"><img src="images/Logo.png" style="width: 130px;" /></a>
+                    </div>
+                    <!-- Links -->
+                    <div style="width: 100%">
+                        <ul class="navbar-nav" style=" margin: auto; width: fit-content;">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">TRANG CHỦ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">GIỚI THIỆU</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="SearchTickets.html">ĐẶT VÉ TÀU</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="UpdateTickets.html">CẬP NHẬT VÉ TÀU</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">CẨN NANG ĐI TÀU</a>
+                            </li>
+                            <!-- Dropdown -->
+                            <!-- <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                              Dropdown link
+                            </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Link 3</a>
+                                    </div>
+                                </li> -->
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <img src="images/toalanha.png" alt="Los Angeles" width="100%" height="200">
+
+    </div>
+    <div class="container">
+        <div class="dayrunto text-center" style="width: 100%; margin: 10px 0px;">Thanh toán</div>
+        <div class="row form-group table-responsive list-ticket-deskhop" style="margin: auto;">
+            <table class="table table-bordered">
+                <thead class="et-table-header">
+                    <tr>
+                        <th style="background-color: lavender;width: 25%;" class="ng-binding">Họ tên
+                            <!--Họ tên-->
+                        </th>
+                        <th style="width: 120px;background-color: lavender;" class="ng-binding">Thông tin chỗ
+                            <!--Thông tin chỗ-->
+                        </th>
+                        <th style="background-color: lavender;" class="ng-binding">Giá vé
+                            <!--Giá vé-->
+                        </th>
+                        <th style="background-color: lavender;" class="ng-binding">Giảm đối tượng
+                            <!--Giảm đối tượng-->
+                        </th>
+                        <th style="background-color: lavender;" class="ng-binding">Khuyến mại
+                            <!--Khuyến mại-->
+                        </th>
+                        <th style="background-color: lavender;" class="ng-binding">Bảo hiểm
+                            <!--Bảo hiểm-->
+                        </th>
+                        <th style="background-color: lavender;width: 120px;" class="ng-binding">Thành tiền (VNĐ)
+                            <!--Thành tiền (VNĐ)-->
+                        </th>
+                        <th style="background-color: lavender;width: 25px;"></th>
+                    </tr>
+                </thead>
+                <!-- <tbody ng-show="ves.khuHoi.length > 0" class="ng-hide">
+                        <tr class="et-table-group-header" ng-show="ves.chieuDi.length > 0 || ves.chieuVe.length > 0">
+                            <td colspan="8"><label class="ng-binding">Khứ hồi</label></td>
+                        </tr>
+                    </tbody> -->
+                <tbody ng-show="ves.chieuDi.length > 0" class="">
+                    <!-- <tr class="et-table-group-header ng-hide" ng-show="ves.khuHoi.length > 0 || ves.chieuVe.length > 0">
+                            <td colspan="8"><label class="ng-binding">Chiều đi
+                        </label>
+                        </td>
+                        </tr> -->
+                    <!-- ngRepeat: ve in ves.chieuDi -->
+                    <tr>
+                        <td class="et-table-cell" style="padding: 0px;border-bottom: solid 2px #ccc;">
+                            <div class="input-group input-group-sm" style="margin-bottom: 6px;width: 100%;">
+                                <span class="input-group-addon text-left ng-binding" style="width: 84px;">Họ tên</span>
+                                <input type="text" placeholder="Thông tin hành khách" ng-model="ve.hanhKhach.hoTen" class="form-control input-sm ng-pristine ng-invalid ng-invalid-required" ng-class="{'et-error-block': ve.nameMissing}" ng-change="syncRegister($index, false)" style="border-top-right-radius: 4px !important;border-bottom-right-radius: 4px !important;"
+                                    required="">
+                            </div>
+                            <div class="input-group input-group-sm" style="margin-bottom: 6px;width: 100%;">
+                                <span class="input-group-addon text-left ng-binding" style="width: 84px;">Đối tượng</span>
+                                <select class="form-control input-sm ng-pristine ng-valid ng-valid-required" ng-model="ve.hanhKhach.loaiKhach" ng-change="changeLoaiHanhKhach(ve)" ng-class="{'et-error-block': ve.typeMissing}" ng-options="passengerType.TenPTOnline|translate group by passengerType.Nhom|translate for passengerType in passengerTypes"
+                                    id="pt103888574" style="border-top-right-radius: 4px !important;border-bottom-right-radius: 4px !important;" required=""><optgroup label="Người Việt Nam"><option value="0" selected="selected" label="Người lớn">Người lớn</option><option value="1" label="Trẻ em">Trẻ em</option><option value="2" label="Sinh viên">Sinh viên</option><option value="3" label="Người cao tuổi">Người cao tuổi</option></optgroup><optgroup label="Người nước ngoài"><option value="4" label="Người lớn">Người lớn</option><option value="5" label="Trẻ em">Trẻ em</option></optgroup></select>
+                            </div>
+                            <div class="input-group input-group-sm" style="width: 100%;">
+                                <span class="input-group-addon text-left ng-binding" style="width: 84px;">Số giấy tờ</span>
+                                <input type="text" placeholder="Số CMND/ Hộ chiếu/ Ngày tháng năm sinh trẻ em" ng-model="ve.hanhKhach.soCMND" maxlength="19" class="form-control input-sm ng-pristine ng-valid" ng-class="{'et-error-block': ve.identityMissing}" ng-disabled="ve.hanhKhach.loaiKhach &amp;&amp; (ve.hanhKhach.loaiKhach.MaPT == 2 || ve.hanhKhach.loaiKhach.MaPT == 99)"
+                                    ng-change="syncRegister($index, true)" style="border-top-right-radius: 4px !important;border-bottom-right-radius: 4px !important;">
+                            </div>
+                        </td>
+                        <td style="font-size: 10px;border-bottom: solid 2px #ccc;">
+                            <div class="text-center ng-hide" ng-show="ve.seat.Status.Status != 6">
+                                <!-- <img src="/images/waring20.png" tooltip="" class="ng-scope"> -->
+                            </div>
+                            <div class="text-center text-info" ng-show="ve.seat.Status.Status == 6">
+                                <!--Giữ trong <span class="text-danger">{{ve.seat.Status.Duration}}</span> giây-->
+                                <span ng-bind-html="'PBuyTicket_thoiGianTamGiu'|translate:ve.seat.Status.Duration" class="ng-binding">Giữ trong <span class="text-danger">544</span> giây</span>
+                            </div>
+                            <div>
+                                <div class="ng-binding">
+                                    SE8 Sài Gòn-Hà Nội
+                                </div>
+                                <div class="ng-binding">
+                                    21/11/2020 06:00
+                                </div>
+                                <div class="ng-binding">
+                                    <!--{{'Toa ' + ve.carNo + ' chỗ ' + ve.seat.ChoSo}}-->
+                                    Toa 6 chỗ 40
+                                </div>
+                                <div class="ng-binding">
+                                    Nằm khoang 6 điều hòa T2
+                                </div>
+                            </div>
+                        </td>
+                        <td class="et-table-cell text-right ng-binding" style="border-bottom: solid 2px #ccc;">
+                            1,237,000
+                        </td>
+                        <td class="et-table-cell text-right ng-binding" style="border-bottom: solid 2px #ccc;">
+                            0
+                        </td>
+                        <td class="et-table-cell text-left" style="border-bottom: solid 2px #ccc;">
+                            <!-- <div ng-show="!ve.isloadedKhuyenMai" class="ng-binding ng-hide">
+                                    Đang tìm khuyến mại...
+                                    Dang tìm khuyến mại...
+                                </div> -->
+                            <div ng-show="ve.isloadedKhuyenMai" class="">
+                                <div ng-show="ve.ListKhuyenMai.length==0" class="ng-binding ng-hide">
+                                    <!-- Không có khuyến mại cho vé này -->
+                                    <!--Không có khuyến mại-->
+                                </div>
+                                <div ng-show="ve.ListKhuyenMai.length>0" class="">
+                                    <div ng-show="ve.ListKhuyenMaiIDApDung.length>0" class="">
+                                        <div>
+                                            <div>
+                                                <span style="font-size: 12px;" class="ng-binding">GIẢM GIÁ XA NGÀY THEO CĐ 75/VTSG (SE7/8, SE10) - THẤP ĐIỂM SAU TẾT - thêm 277/VTSG ngày 04/03/2020</span>
+                                                <span style="font-size: 12px;" class="ng-binding">(giảm<!--giảm--> 62,000)</span>
+                                            </div>
+                                            <div ng-show="ve.khuyenMai&amp;&amp;ve.TangGiam!=0" style="font-size: 12px;" class="">
+                                                <div class="text-danger ng-binding">
+                                                    * Lưu ý:
+                                                    <!--* Lưu ý phí trả:-->
+                                                    <span ng-bind-html="'PBuyTicket_luuYTraVeChiTiet'|translate" class="ng-binding">Đây là vé áp dụng chương trình khuyến mại, đề nghị quý khách đọc kỹ</span>
+                                                    <!--{{ve.khuyenMai.PhiTraVeFromTo}}-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="font-size: 12px;">
+                                            <a href="javascript:;" ng-click="openSelectKhuyenMai(ve)" class="ng-binding">
+                                                    Các quy định về điều kiện mua vé, trả vé, đổi vé và hủy vé<!--Chi tiết và điều kiện trả vé-->
+                                                </a>
+                                        </div>
+                                    </div>
+                                    <div ng-show="ve.ListKhuyenMaiIDApDung.length==0" class="ng-hide">
+                                        <div style="font-size: 12px;" class="ng-binding">Không sử dụng khuyến mại
+                                            <!--Không sử dụng khuyến mại-->
+                                        </div>
+                                        <div style="font-size: 12px;">
+                                            <a href="javascript:;" ng-click="openSelectKhuyenMai(ve)" class="ng-binding">
+                                                    Chọn khuyến mại<!--Chọn khuyến mại'-->
+                                                </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="et-table-cell text-right ng-binding" style="border-bottom: solid 2px #ccc;">
+                            1,000
+                        </td>
+                        <td class="et-table-cell text-right ng-binding" style="border-bottom: solid 2px #ccc;">
+                            1,176,000
+                        </td>
+                        <td style="vertical-align: middle;border-bottom: solid 2px #ccc;">
+                            <a analytics-on="click" analytics-event="removeTicket" href="" class="et-btn-cancel" ng-click="removeTicket(ve)" ng-show="!ve.seat.waiting"></a>
+                            <!-- <img src="/images/loading51.gif" style="width: 30px;" ng-show="ve.seat.waiting" class="ng-hide"> -->
+                        </td>
+                    </tr>
+                    <!-- end ngRepeat: ve in ves.chieuDi -->
+                </tbody>
+                <tbody ng-show="ves.chieuVe.length > 0" class="ng-hide">
+                    <tr class="et-table-group-header" ng-show="ves.khuHoi.length > 0 || ves.chieuDi.length > 0">
+                        <td colspan="8">
+                            <!-- <label class="ng-binding">Chiều vềChiều về</label>&nbsp; -->
+                            <!-- <span><a class="et-btn ng-binding" id="btnCloneBookingInfo" ng-show="ves.chieuDi.length > 0" ng-click="setBackInfo()">Lấy thông tin từ chiều điLấy thông tin từ chiều đi</a></span> -->
+                        </td>
+                    </tr>
+                    <!-- ngRepeat: ve in ves.chieuVe -->
+                </tbody>
+                <tfoot>
+                    <tr class="info">
+                        <td colspan="6">
+                            <span class="pull-right"><strong class="ng-binding">Tổng tiền<!--Tổng tiền--></strong></span>
+                        </td>
+                        <td class="text-right">
+                            <strong class="ng-binding">1,176,000</strong>
+                        </td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="et-register-block">
+
+            <h5 class="ng-binding">Thông tin người đặt vé</h5>
+
+            <div class="row text-info ng-binding">
+
+                Quý khách vui lòng điền đẩy đủ và chính xác các thông tin về người mua vé dưới đây. Các thông tin này sẽ được sử dụng để xác minh người mua vé và lấy vé tại ga trước khi lên tàu theo đúng các quy định của Tổng công ty Đường sắt Việt Nam.
+
+            </div>
+
+            <div class="form-horizontal et-col-md-12 form-group">
+                <div style="width:100%; height:10px; float:left;"></div>
+                <div class="row" style="padding-left:5px;">
+
+                    <label class="et-col-md-2 ng-binding mobi-display-none">HỌ TÊN, SỐ ĐIỆN THOẠI, EMAIL<span style="color: red">*</span></label>
+
+                    <div class="et-col-md-4 mb-w-100">
+
+                        <input type="text" name="fullName" class="form-control input-sm ng-pristine ng-invalid ng-invalid-required" placeholder="Họ và tên" required="">
+                        <br>
+                        <input type="text" id="phoneNumber" required="" name="phoneNumber" class="form-control input-sm ng-pristine ng-valid" placeholder="Số di động">
+                        <br>
+                        <input type="email" id="email" name="email" class="form-control input-sm ng-pristine ng-valid ng-valid-email" placeholder="Email">
+                    </div>
+
+                    <div class="et-col-md-6" style="float:left;padding: 0px 5px; width:400px;">
+                        <h5 class="ng-binding" style="font-size:20px;">CHỌN HÌNH THỨC THANH TOÁN</h5>
+                        <div class="row">
+
+                            <div style="width: 100%;">
+
+                                <input type="radio" name="phuongThucThanhToan" checked="" value="0" onchange="changePay(0)" class="ng-pristine ng-valid">
+
+                                <span class="et-align-top ng-binding">Tại văn phòng (65 Tân Quý, Tân Phú, TPHCM)</span>
+
+                            </div>
+
+                            <div style="width: 100%;">
+
+                                <input type="radio" name="phuongThucThanhToan" value="1" onchange="changePay(1)" class="ng-pristine ng-valid">
+
+                                <span class="et-align-top ng-binding">Thanh toán qua ngân hàng</span>
+
+                            </div>
+
+                            <div style="width: 100%;">
+
+                                <input onchange="changePay(2)" type="radio" name="phuongThucThanhToan" value="2" class="ng-pristine ng-valid">
+
+                                <span class="et-align-top ng-binding">Thanh toán tại nhà</span>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div id="diachi" class="et-col-md-6" style="display: block; width: 100%;">
+
+
+
+                                <div class="et-col-md-8">
+
+                                    <input type="text" name="diachinha" class="form-control input-sm ng-pristine ng-valid ng-valid-email" placeholder="Địa chỉ nhà">
+
+                                </div>
+
+                            </div>
+                            <!-- style="display: none" -->
+                            <div id="thenganhang" class="et-col-md-6" style="display: none;">
+
+                                <div style="position: absolute; width:375px;" class="mb-pos-relative">
+
+
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input checked="" type="radio" name="nganghangthanhtoan" value="Ngân hàng thương mại cổ phần Ngoại thương Việt Nam Vietcombank-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	0071000794841-Chi Nhánh 	Tân Bình, Tp.HCM" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">Vietcombank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân Hàng TMCP Kỹ Thương Việt Nam-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	19027544365017-Chi Nhánh: 	Tân Bình" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">Techcombank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân hàng TMCP Á Châu ACB-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	 165981239-Chi Nhánh: 	 Cộng Hòa" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">Á Châu ACB</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân Hàng TMCP Đông Á-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	0103353679-Chi Nhánh: 	 Cộng Hòa" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">Đông Á</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân Hàng Đầu Tư Và Phát Triển Việt Nam BIDV-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	31310000627658-Chi Nhánh: 	Cộng Hòa" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">BIDV</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân Hàng Nông Nghiệp Và Phát Triển Nông Thôn Việt Nam Agribank-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	1604205284040-Chi Nhánh: 	Phú Nhuận" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">Agribank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="TMCP Công Thương Việt Nam Vietinbank-Tên tài khoản : 	PHẠM DUY KHÁNH-Số tài khoản : 	105006520979-Chi Nhánh: 	 Tân Bình" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">Vietinbank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân hàng TMCP Sài Gòn Thương Tín Sacombank-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	060072656663-Chi Nhánh: 	Tân Bình" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">Sacombank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân hàng Quân Đội-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	1010142359005-Chi Nhánh: 	 Tân Bình" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">MB Bank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân hàng TMCP Phát triển Tp Hồ Chí Minh-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	 006704070004092-Chi Nhánh: 	 Cộng Hòa" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">HD Bank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân Hàng Xuất nhập khẩu VIỆT NAM-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	140415053848869-Chi Nhánh: 	Tân Bình" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">EximBank</span>
+                                    </div>
+                                    <div class="et-col-md-4" style="width: 50%; float: left;">
+                                        <input type="radio" name="nganghangthanhtoan" value="Ngân hàng TMCP Việt Nam Thịnh Vượng-Tên tài khoản : 	PHẠM DUY KHÁNH (GĐ Tài Chính)-Số tài khoản : 	 54947801-Chi Nhánh 	Cộng Hòa, Tân Bình" class="ng-pristine ng-valid">
+                                        <span class="et-align-top ng-binding">VPBank</span>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+
+
+                </div>
+
+                <div class="row">
+
+
+                    <div class="et-col-md-6">
+
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <input name="giadi" id="giadi" type="hidden">
+
+            <input name="giave" id="giave" type="hidden">
+
+            <input name="submit" value="3" type="hidden">
+
+            <div>
+                <div style="width: 350px; margin: auto; ">
+                    <button id="submit_btn" class="et-btn ng-binding" style="width: 100%;">Đăng ký vé</button>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div style="background: #171717; margin-top: 40px; color: #ffffff;color: #e3e3e3;">
+        <div class="container" style="display: flex;padding: 20px 0px;">
+            <div style="width: 33.33%; text-align: center;">
+                <div style=" font-size: 20px;">VÉ TÀU TRỰC TUYẾN</div>
+                <a class="navbar-brand" href="/"><img src="images/Logo.png" style="width: 130px;" /></a>
+            </div>
+            <div style="width: 33.33%">
+                <div style=" font-size: 20px;">VỀ CHÚNG TÔI</div>
+                <div style="margin: 10px;color: rgb(212, 163, 77);">
+                    <p><i class="fa fa-map-marker" style="margin-right: 5px;"></i> 12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, TP.HCM</p>
+                    <p><i class="fas fa-phone" style="margin-right: 5px;"></i> 0999999999</p>
+                    <p><i class="fas fa-envelope" style="margin-right: 5px;"></i> vetautructuyen@gmail.com</p>
+                </div>
+            </div>
+            <div style="width: 33.33%; text-align: center;">
+                <div style=" font-size: 20px;">CÁC KÊNH THÔNG TIN CHÍNH THỨC</div>
+                <div>
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook" style="font-size: 40px; margin: 10px;"></i></a>
+                    <a href="https://www.youtube.com/"><i class="fab fa-youtube" style="font-size: 40px; margin: 10px;"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram" style="font-size: 40px; margin: 10px;"></i></a>
+                    <a href="https://twitter.com/"><i class="fab fa-twitter" style="font-size: 40px; margin: 10px;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js"></script>

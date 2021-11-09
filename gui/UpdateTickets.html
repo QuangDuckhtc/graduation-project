@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bán vé tàu trực tuyến</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/fontawesome.js"></script>
+    <script src="js/Index.js"></script>
+    <style>
+        /* Make the image fully responsive */
+        
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function() {
+            $(".owl-carousel").owlCarousel({
+                autoPlay: 3000,
+                items: 3,
+                itemsDesktop: [1199, 3],
+                itemsDesktopSmall: [979, 3],
+                center: true,
+                nav: true,
+                loop: true,
+                responsive: {
+                    600: {
+                        items: 3
+                    }
+
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="headertop">
+        <div style="position: fixed;width: 100%; z-index: 99;    background-color: #353232a3;">
+            <div class="container">
+                <nav class="navbar navbar-expand-sm navbar-dark">
+                    <!-- Brand -->
+                    <div style="width: 280px;">
+                        <a class="navbar-brand" href="Index.html"><img src="images/Logo.png" style="width: 130px;" /></a>
+                    </div>
+                    <!-- Links -->
+                    <div style="width: 100%">
+                        <ul class="navbar-nav" style=" margin: auto; width: fit-content;">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">TRANG CHỦ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">GIỚI THIỆU</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="SearchTickets.html">ĐẶT VÉ TÀU</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="UpdateTickets.html">CẬP NHẬT VÉ TÀU</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">CẨN NANG ĐI TÀU</a>
+                            </li>
+                            <!-- Dropdown -->
+                            <!-- <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                              Dropdown link
+                            </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Link 3</a>
+                                    </div>
+                                </li> -->
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <img src="images/toalanha.png" alt="Los Angeles" width="100%" height="200">
+
+    </div>
+    <div class="container" style="display: flex;">
+        <div class="col-left-70">
+            <div class="dayrunto text-center" style="width: 50%; margin: 10px auto;">Tìm vé tàu</div>
+            <div style="border: 1px solid #ccc; width: 80%; margin: auto;background-color: #ffffff;">
+                <div style="padding: 20px; margin: auto; width: 500px;">
+                    <div class="form-group" style="display: flex;">
+                        <div style="align-self: center; width: 110px; border: 1px solid #ced4da;    padding: .375rem .75rem;background-color: #ced4da; border-radius: 10px 0px 0px 10px;">Chọn ga đi</div>
+                        <div>
+                            <select class="form-control" style="width: 355px;border-radius: 0px 5px 5px 0px;">
+                                <option>Sài Gòn</option>
+                                <option>Hà Nội</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex;">
+                        <div style="align-self: center; width: 110px; border: 1px solid #ced4da;    padding: .375rem .75rem;background-color: #ced4da; border-radius: 10px 0px 0px 10px;">Chọn ga đến</div>
+                        <div>
+                            <select class="form-control" style="width: 355px;border-radius: 0px 5px 5px 0px;">
+                                <option>Sài Gòn</option>
+                                <option>Hà Nội</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex;">
+                        <div style="width: 200px;display: flex;">
+                            <input type="radio" style="width: 20px; height: 20px;">
+                            <div style="align-self: center; margin-left: 8px;">Một chiều</div>
+                        </div>
+                        <div style="width: 200px;display: flex;">
+                            <input type="radio" style="width: 20px; height: 20px;">
+                            <div style="align-self: center; margin-left: 8px;">Khứ hồi</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex;">
+                        <div style="align-self: center; width: 110px; border: 1px solid #ced4da;    padding: .375rem .75rem;background-color: #ced4da; border-radius: 10px 0px 0px 10px;">Ngày đi</div>
+                        <div>
+                            <input class="form-control" type="date" style="width: 355px;border-radius: 0px 5px 5px 0px;">
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex;">
+                        <div style="align-self: center; width: 110px; border: 1px solid #ced4da;    padding: .375rem .75rem;background-color: #ced4da; border-radius: 10px 0px 0px 10px;">Ngày về</div>
+                        <div>
+                            <input class="form-control" type="date" style="width: 355px;border-radius: 0px 5px 5px 0px;">
+                        </div>
+                    </div>
+                    <a href="Detail.html">
+                        <div style="padding: 10px; width: 100px; margin: auto; background-color: #2573a0; text-align: center; color: #ffffff; border-radius: 5px; cursor: pointer;">
+                            Tìm kiếm
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-right-30">
+            <div class="carditem" style="border: 1px solid #ccc;">
+                <div style="color: #2573a0; font-weight: 600; border-bottom: 2px solid #2573a0;"><i class="fas fa-bars"></i> Giỏ vé</div>
+                <div>
+                    <div style="padding: 10px;">
+                        <div style="text-align: center;">Chiều đi</div>
+                        <div>ES3 - Sài Gòn - Hà Nội</div>
+                        <div>21/11/2020 06:00</div>
+                        <div>Chỗ 17 - Ngồi mềm điều hòa</div>
+                    </div>
+                    <hr>
+                    <div>
+                        <a href="Paymenth.html">
+                            <div style="background-color: red; padding: 10px; width: 60%; margin: auto; text-align: center; color: #ffffff;cursor: pointer">MUA VÉ</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="background: #171717; margin-top: 40px; color: #ffffff;color: #e3e3e3;">
+        <div class="container" style="display: flex;padding: 20px 0px;">
+            <div style="width: 33.33%; text-align: center;">
+                <div style=" font-size: 20px;">VÉ TÀU TRỰC TUYẾN</div>
+                <a class="navbar-brand" href="/"><img src="images/Logo.png" style="width: 130px;" /></a>
+            </div>
+            <div style="width: 33.33%">
+                <div style=" font-size: 20px;">VỀ CHÚNG TÔI</div>
+                <div style="margin: 10px;color: rgb(212, 163, 77);">
+                    <p><i class="fa fa-map-marker" style="margin-right: 5px;"></i> 12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, TP.HCM</p>
+                    <p><i class="fas fa-phone" style="margin-right: 5px;"></i> 0999999999</p>
+                    <p><i class="fas fa-envelope" style="margin-right: 5px;"></i> vetautructuyen@gmail.com</p>
+                </div>
+            </div>
+            <div style="width: 33.33%; text-align: center;">
+                <div style=" font-size: 20px;">CÁC KÊNH THÔNG TIN CHÍNH THỨC</div>
+                <div>
+                    <a href="https://www.facebook.com/"><i class="fab fa-facebook" style="font-size: 40px; margin: 10px;"></i></a>
+                    <a href="https://www.youtube.com/"><i class="fab fa-youtube" style="font-size: 40px; margin: 10px;"></i></a>
+                    <a href="https://www.instagram.com/"><i class="fab fa-instagram" style="font-size: 40px; margin: 10px;"></i></a>
+                    <a href="https://twitter.com/"><i class="fab fa-twitter" style="font-size: 40px; margin: 10px;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js"></script>
