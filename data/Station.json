@@ -1,0 +1,225 @@
+[{
+  "_id": {
+    "$oid": "6190a37e0a1aef577eeebeeb"
+  },
+  "idShow": "G1",
+  "name": "Hà Nội",
+  "distance": 0
+},{
+  "_id": {
+    "$oid": "6190a4c20a1aef577eeebeec"
+  },
+  "idShow": "G2",
+  "name": "Phủ lý",
+  "distance": 56
+},{
+  "_id": {
+    "$oid": "6190a5250a1aef577eeebeee"
+  },
+  "idShow": "G3",
+  "name": "Nam Định",
+  "distance": 87
+},{
+  "_id": {
+    "$oid": "6190a5670a1aef577eeebeef"
+  },
+  "idShow": "G4",
+  "name": "Ninh Bình",
+  "distance": 115
+},{
+  "_id": {
+    "$oid": "6190a5840a1aef577eeebef0"
+  },
+  "idShow": "G5",
+  "name": "Bỉm Sơn",
+  "distance": 141
+},{
+  "_id": {
+    "$oid": "6190a5980a1aef577eeebef1"
+  },
+  "idShow": "G6",
+  "name": "Thanh Hóa",
+  "distance": 175
+},{
+  "_id": {
+    "$oid": "6190a5b10a1aef577eeebef2"
+  },
+  "idShow": "G7",
+  "name": "Minh Khôi",
+  "distance": 197
+},{
+  "_id": {
+    "$oid": "6190a5dd0a1aef577eeebef3"
+  },
+  "idShow": "G8",
+  "name": "Chợ Sy",
+  "distance": 279
+},{
+  "_id": {
+    "$oid": "6190a5fc0a1aef577eeebef4"
+  },
+  "idShow": "G9",
+  "name": "Vinh",
+  "distance": 319
+},{
+  "_id": {
+    "$oid": "6190a6120a1aef577eeebef5"
+  },
+  "idShow": "G10",
+  "name": "Yên Trung",
+  "distance": 340
+},{
+  "_id": {
+    "$oid": "6190a6370a1aef577eeebef6"
+  },
+  "idShow": "G11",
+  "name": "Hương Phố",
+  "distance": 387
+},{
+  "_id": {
+    "$oid": "6190a64d0a1aef577eeebef7"
+  },
+  "idShow": "G12",
+  "name": "Đồng Lê",
+  "distance": 436
+},{
+  "_id": {
+    "$oid": "6190a67a0a1aef577eeebef8"
+  },
+  "idShow": "G13",
+  "name": "Đồng Hới",
+  "distance": 522
+},{
+  "_id": {
+    "$oid": "6190a6950a1aef577eeebef9"
+  },
+  "idShow": "G14",
+  "name": "Đông Hà",
+  "distance": 622
+},{
+  "_id": {
+    "$oid": "6190a6b00a1aef577eeebefa"
+  },
+  "idShow": "G15",
+  "name": "Huế",
+  "distance": 688
+},{
+  "_id": {
+    "$oid": "6190a6cd0a1aef577eeebefb"
+  },
+  "idShow": "G16",
+  "name": "Đà Nẵng",
+  "distance": 791
+},{
+  "_id": {
+    "$oid": "6190a7550a1aef577eeebefc"
+  },
+  "idShow": "G17",
+  "name": "Tam Kỳ",
+  "distance": 865
+},{
+  "_id": {
+    "$oid": "6190a76d0a1aef577eeebefd"
+  },
+  "idShow": "G18",
+  "name": "Núi Thành",
+  "distance": 890
+},{
+  "_id": {
+    "$oid": "6190a7830a1aef577eeebefe"
+  },
+  "idShow": "G19",
+  "name": "Quãng Ngãi",
+  "distance": 928
+},{
+  "_id": {
+    "$oid": "6190a7990a1aef577eeebeff"
+  },
+  "idShow": "G20",
+  "name": "Đức Phổ",
+  "distance": 968
+},{
+  "_id": {
+    "$oid": "6190a7c10a1aef577eeebf00"
+  },
+  "idShow": "G21",
+  "name": "Bồng Sơn",
+  "distance": 1017
+},{
+  "_id": {
+    "$oid": "6190a7da0a1aef577eeebf01"
+  },
+  "idShow": "G22",
+  "name": "Diêu Trì",
+  "distance": 1096
+},{
+  "_id": {
+    "$oid": "6190a7ee0a1aef577eeebf02"
+  },
+  "idShow": "G23",
+  "name": "Tuy Hòa",
+  "distance": 1196
+},{
+  "_id": {
+    "$oid": "6190a80e0a1aef577eeebf03"
+  },
+  "idShow": "G24",
+  "name": "Giã",
+  "distance": 1254
+},{
+  "_id": {
+    "$oid": "6190a8260a1aef577eeebf04"
+  },
+  "idShow": "G25",
+  "name": "Ninh Hòa",
+  "distance": 1281
+},{
+  "_id": {
+    "$oid": "6190a8390a1aef577eeebf05"
+  },
+  "idShow": "G26",
+  "name": "Nha Trang",
+  "distance": 1315
+},{
+  "_id": {
+    "$oid": "6190a85a0a1aef577eeebf06"
+  },
+  "idShow": "G27",
+  "name": "Tháp Chàm",
+  "distance": 1408
+},{
+  "_id": {
+    "$oid": "6190a8720a1aef577eeebf07"
+  },
+  "idShow": "G28",
+  "name": "Sôn Mao",
+  "distance": 1484
+},{
+  "_id": {
+    "$oid": "6190a88d0a1aef577eeebf08"
+  },
+  "idShow": "G29",
+  "name": "Bình Thuận",
+  "distance": 1551
+},{
+  "_id": {
+    "$oid": "6190a8a90a1aef577eeebf09"
+  },
+  "idShow": "G30",
+  "name": "Biên Hòa",
+  "distance": 1697
+},{
+  "_id": {
+    "$oid": "6190a8c50a1aef577eeebf0a"
+  },
+  "idShow": "G31",
+  "name": "Dĩ An",
+  "distance": 1707
+},{
+  "_id": {
+    "$oid": "6190a8df0a1aef577eeebf0b"
+  },
+  "idShow": "G32",
+  "name": "Sài Gòn",
+  "distance": 1726
+}]

@@ -10,6 +10,8 @@ export default function DetailSchedule(props) {
   const dataSchedule = useSelector(state => state.valueSearch)
   const [changeTrain, setChangeTrain] = useState(0);
   const [changeCarriage, setChangeCarriage] = useState(-1);
+  const [changeSeat, setChangeSeat] = useState(-1);
+
   const [dataTrain, setDataTrain] = useState([])
   const [dataCarriage, setDataCarriage] = useState([])
   const [dataSeat, setDataSeat] = useState([])
@@ -198,11 +200,13 @@ export default function DetailSchedule(props) {
                       {dataSeat.map((item, index) => {
                         return (
                           index < 20 &&
-                          <div key={index} className="et-car-nm-64-sit ng-isolate-scope" style={{ width: '20%' }}>
+                          <div key={index} className="et-car-nm-64-sit ng-isolate-scope" style={{ width: '20%' }}
+                            onClick={() => { }}
+                          >
                             <div className="et-car-seat-right et-seat-h-35">
                               <div className="et-col-16 et-sit-side" />
                               <div className="et-col-84 et-sit-sur-outer">
-                                <div className="et-sit-sur tooltiptop text-center et-sit-avaiable">
+                                <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: changeSeat }}>
                                   <div className="et-sit-no ng-scope">
                                     <span className>{index + 1}</span>
                                   </div>
