@@ -1,4 +1,2 @@
-.vscode
 /client/node_modules
 /API/node_modules
-package-lock.json

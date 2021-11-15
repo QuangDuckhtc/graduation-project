@@ -6,7 +6,7 @@ import { axios } from '../../config/constant'
 export default function Payment() {
 
   async function paymentPaypal() {
-    
+
   }
 
   const onCancel = (data) => {
@@ -213,10 +213,10 @@ export default function Payment() {
         <input name="submit" defaultValue={3} type="hidden" />
         <div>
           <div style={{ width: '350px', margin: 'auto' }}>
-            {/* <PaypalExpressBtn
+            <PaypalExpressBtn
               env='sandbox'
               client={{
-                sandbox: 'ARYRZbb1hCWx_1RWzAijLMHFgv-zPtDEuuM4HnflIck2cspa-vwvgdgTajTPcqthqRykhdlSWAzUouTv',
+                sandbox: 'AWTh6CiECUbml80ayCI8uJaMlKs5Sd_4mrwEz_T0u0auNCqVy6drdKSnuICLch_v0NktF1CWWilCHK9v',
                 product: 'YOUR-PRODUCTION-APP-ID'
               }}
               currency='USD'
@@ -229,8 +229,8 @@ export default function Payment() {
                 color: 'blue',
                 shape: 'rect',
                 label: 'checkout'
-              }} /> */}
-            <button onClick={() => { paymentPaypal() }} className="et-btn ng-binding" style={{ width: '100%' }}>Đăng ký vé</button>
+              }} />
+            {/* <button onClick={() => { paymentPaypal() }} className="et-btn ng-binding" style={{ width: '100%' }}>Đăng ký vé</button> */}
           </div>
         </div>
       </div>

@@ -31,7 +31,8 @@ function slugName(str) {
 	return str;
 }
 
-const DbUrl = 'mongodb://localhost:27017';
+// const DbUrl = 'mongodb://localhost:27017';
+const DbUrl = 'mongodb+srv://admin:admin123456@develop.o5a0o.mongodb.net/test'
 const DbName = 'BookingOnline';
 
 const itemPerPage = 8;
