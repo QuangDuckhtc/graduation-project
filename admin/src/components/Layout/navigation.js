@@ -36,7 +36,7 @@ export default function Navigation() {
             </Link>
           </div>
           <div className="padding-top-10" >
-            <Link to="/ticket">
+            <Link to="/order">
               <div className="btn-menu">
                 <i className="fa fa-cart-plus fa-menu"></i>Thông tin đặt
               </div>

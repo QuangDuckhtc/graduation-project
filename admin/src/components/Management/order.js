@@ -1,6 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { axios } from '../../config/constant'
+import { Pagination } from 'antd'
 
-export default function Ticket() {
+
+
+export default function Order() {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage,setTotalPage]= useState(0)
+  const [dataOrder, setDataOrder] = useState([])
+
+
+  function format_curency(a) {
+    a = a.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    return a;
+  }
+
+  async function getDataOrderByPage(page) {
+    await axios.get(`/order-page?page=${page}`
+    ).then(function (res) {
+      setDataOrder(res.data.data)
+      setTotalPage(res.data.totalPage)
+    }).catch(function (err) {
+      console.log(err)
+    })
+  }
+
+  useEffect(() => {
+    getDataOrderByPage(currentPage - 1)
+  }, [])
+
   return (
     <div>
       <div>
@@ -65,8 +94,26 @@ export default function Ticket() {
                     <td className="et-table-cell tabl-cell">20.000.000 VND</td>
                     <td className="et-table-cell tabl-cell"><button className='btn btn-primary'>In vé</button>{"  "}<button className='btn btn-danger'>Hủy vé</button></td>
                   </tr>
+                  {dataOrder.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td className="et-table-cell tabl-cell">{item._id}</td>
+                        <td className="et-table-cell tabl-cell">{item.customerName}</td>
+                        <td className="et-table-cell tabl-cell">{item.phone}</td>
+                        <td className="et-table-cell tabl-cell">{item.email}</td>
+                        <td className="et-table-cell tabl-cell">{item.idCart}</td>
+                        <td className="et-table-cell tabl-cell"></td>
+                        <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.countTicket}</td>
+                        <td className="et-table-cell tabl-cell">{format_curency(item.totalPrice) + " VND"}</td>
+                        <td className="et-table-cell tabl-cell"><button className='btn btn-primary'>In vé</button>{"  "}<button className='btn btn-danger'>Hủy vé</button></td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
+              <Pagination defaultPageSize={1} current={currentPage} total={totalPage}>
+
+              </Pagination>
             </div>
           </div>
         </div>

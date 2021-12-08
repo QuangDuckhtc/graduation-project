@@ -491,6 +491,23 @@ app.get('/api/ticket', async (req, res) => {
 })
 
 
+//admin
+app.get('/api/order-page', async (req, res) => {
+	await client.connect()
+	let { page } = req.query
+
+	let allOrder = await colOrder.find().toArray()
+	let totalPage = Math.ceil(parseInt(allOrder.length) / itemPerPage);
+	let result = await colOrder.find({}).sort({ _id: -1 }).linmit(itemPerPage).skip(itemPerPage * page).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result,
+		totalPage: totalPage
+	})
+	console.log(result)
+})
+
+
 
 app.post('/api/login', async (req, res) => {
 	// console.log(req.body.account)
@@ -526,13 +543,14 @@ app.post('/api/login', async (req, res) => {
 				userName: result.account.username,
 				vaiTro: result.vaiTro,
 				role: result.role,
-				name: result,
+				name: result.name,
 				token: token
 			});
 
 		}
 	}
 })
+
 app.get('/demo', async (req, res) => {
 	// var arr = []
 	// for (var i = 1; i < 41; i++) {

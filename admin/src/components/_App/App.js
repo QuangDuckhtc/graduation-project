@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Header, Login, Schedule, Navigation, Home, Ticket, DetailTicket, Revenue } from './Index';
+import { Header, Login, Schedule, Navigation, Home, Order, DetailTicket, Revenue } from './Index';
 import { useSelector } from 'react-redux';
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
             <Switch>
               <Route exact path='/' component={Home} />
               <Route path='/schedule' component={Schedule} />
-              <Route path='/ticket' component={Ticket} />
+              <Route path='/order' component={Order} />
               <Route path='/detail-ticket' component={DetailTicket} />
               <Route path='/revenue' component={Revenue} />
             </Switch>
