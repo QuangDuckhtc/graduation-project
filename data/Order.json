@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "61b05fda38b459a07f372694"
+  },
+  "customerName": "01",
+  "phone": "0987654321",
+  "email": "yenlinh9a6@gmail.com",
+  "idCard": "022033033",
+  "countTicket": 2,
+  "date": "12/8/2021",
+  "totalPrice": 1020800
+},{
+  "_id": {
+    "$oid": "61b06d7e9de9b24fea8401a9"
+  },
+  "customerName": "1",
+  "phone": "0987654321",
+  "email": "www@gmail.com",
+  "idCard": "1",
+  "countTicket": 1,
+  "date": "12/8/2021",
+  "totalPrice": 504000
+},{
+  "_id": {
+    "$oid": "61b06fcb8bcf7b47b544c647"
+  },
+  "customerName": "098765432",
+  "phone": "0987654321",
+  "email": "linh@gmail.com",
+  "idCard": "22",
+  "countTicket": 1,
+  "date": "12/8/2021",
+  "totalPrice": 189000
+},{
+  "_id": {
+    "$oid": "61b070c38bcf7b47b544c649"
+  },
+  "customerName": "nguyen",
+  "phone": "0987654321",
+  "email": "AAA@gmail.com",
+  "idCard": "02",
+  "countTicket": 1,
+  "date": "12/8/2021",
+  "totalPrice": 373200
+}]
