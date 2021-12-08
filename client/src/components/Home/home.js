@@ -2,9 +2,8 @@ import DatePicker from "react-datepicker";
 import React, { useState } from 'react';
 import { Banner } from '../_App/Index'
 import { message } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
-import { Redirect, useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import { Carousel, Image } from 'react-bootstrap'
 import { useEffect } from "react";
 import { axios } from '../../config/constant'
@@ -32,17 +31,29 @@ function Home() {
   }
   async function getDataSchedule(arrData) {
     await axios.post('/schedule', { arrData: arrData }
-    ).then(function (res) {
+    ).then(async function (res) {
       if (res.data.status === 'success') {
+        console.log("data:" + res.data.schedule)
+        // message.success('co lich');
+        dispatch({
+          type: "VALUE_SEARCH", valueSearch: {
+            stationFrom: arrData.length === 2 ? res.data.stationTo : res.data.stationFrom,
+            stationTo: arrData.length === 2 ? res.data.stationFrom : res.data.stationTo,
+            startDate: arrData[0].date,
+            returnDate: arrData.length === 2 ? arrData[1].date : ""
+          }
+        })
+        // dispatch({ type: "DATA_SCHEDULE", dataSchedule: res.data.schedule })
+        dispatch({ type: "DATA_SCHEDULE", dataSchedule: arrData })
         history.push('/detail-schedule')
-        dispatch({ type: "DATA_SCHEDULE", dataSchedule: res.data.data })
       } else {
-        message.error('Không tìm thấy lịch trình phù hợp')
+        message.error(res.data.message)
       }
     }).catch(function (error) {
       console.log(error)
     })
   }
+
   function searchSchedule() {
     var arrData = []
     if (dataSchedule.stationFrom === '' || dataSchedule.stationTo === '' || dataSchedule.status === '' || dataSchedule.startDate === '') {
@@ -100,6 +111,7 @@ function Home() {
           </div>
           <div className="form-group align-self-center with15percent">
             <select className="form-control select-style-sarch width95percent"
+              defaultValue=""
               onChange={(e) => {
                 setDataSchedule({
                   ...dataSchedule,
@@ -107,16 +119,17 @@ function Home() {
                 })
               }}
             >
-              <option value="" disabled selected>Ga đi</option>
+              <option value="" disabled>Ga đi</option>
               {dataStation.map((item, index) => {
                 return (
-                  <option key={index} value={item._id}>{item.name}</option>
+                  <option key={index} value={item._id}>{(index + 1) + item.name}</option>
                 )
               })}
             </select>
           </div>
           <div className="form-group align-self-center with15percent">
             <select
+              defaultValue=""
               className="form-control select-style-sarch width95percent"
               onChange={(e) => {
                 setDataSchedule({
@@ -125,10 +138,10 @@ function Home() {
                 })
               }}
             >
-              <option value="" disabled selected>Ga đến</option>
+              <option value="" disabled >Ga đến</option>
               {dataStation.map((item, index) => {
                 return (
-                  <option key={index} value={item._id}>{item.name}</option>
+                  <option key={index} value={item._id}>{(index + 1) + item.name}</option>
                 )
               })}
             </select>
@@ -151,7 +164,7 @@ function Home() {
             <DatePicker className="form-control select-style-sarch"
               placeholderText="Ngày đi"
               onChange={(date) => {
-                var dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date)
+                var dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(date)
                 setDataSchedule({
                   ...dataSchedule,
                   startDate: dateFormat
@@ -169,7 +182,7 @@ function Home() {
                 value={dataSchedule.returnDate}
                 disabled={lockDate}
                 onChange={(date) => {
-                  var dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date)
+                  var dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(date)
                   setDataSchedule({
                     ...dataSchedule,
                     returnDate: dateFormat

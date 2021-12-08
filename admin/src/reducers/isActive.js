@@ -1,11 +1,11 @@
-const initState = false;
+const initState = true;
 
 const myReducer = (state = initState, action) => {
   switch (action.type) {
-    case 'ACTIVE':
+    case 'SHOW_NAV':
       state = true;
       return state;
-    case 'NO_ACTIVE':
+    case 'HIDE_NAV':
       state = false;
       return state;
     default:

@@ -1,9 +1,9 @@
-const initState = [];
+const initState = {};
 
 const myReducer = (state = initState, action) => {
   switch (action.type) {
-    case 'DATA_SCHEDULE':
-      state = action.dataSchedule
+    case 'VALUE_SEARCH':
+      state = action.valueSearch
       return state;
     default:
       return state;

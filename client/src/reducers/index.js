@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
+import dataSchedule from './dataSchedule';
 import valueSearch from './valueSearch';
-import isActive from './isActive';
+import reloadSeat from './reloadSeat';
+import reloadSeat1 from './reloadSeat1';
+import reloadCart from './reloadCart';
 
 const myReducer = combineReducers({
+  dataSchedule,
   valueSearch,
-  isActive,
+  reloadSeat,
+  reloadSeat1,
+  reloadCart
 })
 
 export default myReducer

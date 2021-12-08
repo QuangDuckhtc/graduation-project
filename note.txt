@@ -1,0 +1,4 @@
+0 chưa thanh toán
+1 thanh toán toán paypal,
+2 đã xuất vé,
+4 đã hủy,

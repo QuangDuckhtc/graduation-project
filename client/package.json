@@ -11,6 +11,7 @@
     "bootstrap": "^4.5.3",
     "cors": "^2.8.5",
     "jquery": "^3.6.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
@@ -25,7 +26,7 @@
     "redux": "^4.1.2",
     "web-vitals": "^0.2.4"
   },
-  "proxy": "http://localhost:9999/getUser",
+  "proxy": "http://localhost:2021/",
   "scripts": {
     "start": "react-scripts start",
     "dev": "set PORT=2021 && react-scripts start",
