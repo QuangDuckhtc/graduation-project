@@ -69,6 +69,7 @@ export default function Order() {
       console.log(err)
     })
   }
+  
   useEffect(() => {
     getDataOrderByPage(currentPage - 1)
   }, [])
@@ -95,8 +96,8 @@ export default function Order() {
               >Tìm kiếm</span>
             </div>
           </div>
-
         </div>
+
         <div id='info' style={{ display: 'block' }} >
           <div className="margin-10px">
             <div className="row form-group table-responsive list-ticket-deskhop margin-auto" >

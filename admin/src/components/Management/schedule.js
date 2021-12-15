@@ -1,6 +1,121 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { axios } from '../../config/constant'
+import { Pagination, Form, message } from 'antd'
+import DatePicker from "react-datepicker";
+import { Modal } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Schedule() {
+  const dispatch = useDispatch();
+  const reloadData = useSelector(state => state.reloadData)
+  const reload = useSelector(state => state.reload)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
+  const [dataSearch, setDataSearch] = useState('')
+  const [dataSchedule, setDataSchedule] = useState([])
+  const [schedule, setSchedule] = useState({
+    //default
+    dateStart: '',
+    dateReturn: '',
+    time: '',
+    station: '',
+    stationRev: '',
+    //search
+    train: null,
+  })
+  const [showModal, setShowModal] = useState(false)
+  const [messages, setMessages] = useState('')
+  const [isEmpty, setIsEmpty] = useState(false)
+
+  async function getDataScheduleByPage(page) {
+    await axios.get(`/schedule-page?page=${page}`
+    ).then(function (res) {
+      setDataSchedule(res.data.data)
+      setTotalPage(res.data.totalPage)
+    }).catch(function (err) {
+      console.log(err)
+    })
+  }
+  async function searchSchedule(page) {
+    console.log(dataSearch)
+    await axios.get(`/schedule-search?page=${page}&&search=${dataSearch}`
+    ).then(function (res) {
+      setDataSchedule(res.data.data)
+      setTotalPage(res.data.totalPage)
+    }).catch(function (err) {
+      console.log(err)
+    })
+  }
+  async function getDataScheduleByValue() {
+    await axios.post('/schedule-value', {
+      schedule: schedule
+    }).then(function (res) {
+      if (res.data.status === 'success') {
+        setSchedule({
+          ...schedule,
+          train: res.data.data.train
+        })
+        setMessages(res.data.message)
+        setIsEmpty(false)
+        console.log(res.data.status)
+      } else if (res.data.status === 'fail') {
+        setSchedule({
+          ...schedule,
+          train: res.data.data
+        })
+        setMessages('')
+        setIsEmpty(true)
+      }
+    }).catch(function (err) {
+      console.log(err)
+    })
+  }
+
+  async function createSchedule() {
+    await axios.post('/schedule-add', {
+      schedule: schedule
+    }).then(function (res) {
+      if (res.data.status === 'success') {
+        message.success(res.data.message)
+        setShowModal(false)
+        setSchedule({
+          dateStart: '',
+          dateReturn: '',
+          time: '',
+          station: '',
+          stationRev: '',
+          train: {
+            idShow: '',
+            carriage: [],
+          }
+        })
+        dispatch({ type: "RELOAD1" })
+      } else {
+        setMessages(res.data.message)
+      }
+    }).catch(function (err) {
+      console.log(err)
+    })
+  }
+
+  useEffect(() => {
+    getDataScheduleByPage(currentPage - 1)
+  }, [])
+
+  useEffect(() => {
+    if (reloadData) {
+      getDataScheduleByValue()
+      dispatch({ type: 'NO_RELOAD' })
+    }
+  }, [reloadData])
+
+  useEffect(() => {
+    if (reload) {
+      getDataScheduleByPage(currentPage - 1)
+      dispatch({ type: 'NO_RELOAD1' })
+    }
+  }, [reload])
+
   return (
     <div>
       <div className="schedule-width" >
@@ -8,41 +123,24 @@ export default function Schedule() {
           <div className="d-fix">
             <div className="width25percent">
               <div className="padding-5px">
-                <input className="form-control form-group" type="text" placeholder="Mã vé tàu" />
-                <input className="form-control form-group" type="text" placeholder="Số CMND hoặc hộ chiếu" />
+                <input className="form-control form-group" type="text" placeholder="Mã tàu / Giờ đi / Ngày đi / Ga khởi hành"
+                  onChange={(e) => {
+                    setDataSearch(e.target.value)
+                  }}
+                />
               </div>
             </div>
-            <div className="width25percent">
-              <div className="padding-5px">
-                <select className="form-group form-control">
-                  <option>Ga đi</option>
-                  <option>Sài Gòn</option>
-                  <option>Hà Nội</option>
-                </select>
-                <input className="form-control form-group" type="text" placeholder="Mác tàu (SE1, SE2,...)" />
-              </div>
-            </div>
-            <div className="width25percent">
-              <div className="padding-5px">
-                <div className="form-group d-fix">
-                  <select className="form-control">
-                    <option>Ga đến</option>
-                    <option>Sài Gòn</option>
-                    <option>Hà Nội</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="width25percent">
-              <div className="padding-5px">
-                <input className="form-control" type="text" placeholder="Ngày đi" />
-              </div>
-            </div>
+            <span style={{ height: '40px', fontSize: '14px', cursor: 'pointer' }} className="btn-search-f" onClick={() => {
+              setCurrentPage(1)
+              searchSchedule(0)
+            }}
+            >Tìm kiếm</span>
+            <span style={{ height: '40px', fontSize: '14px', cursor: 'pointer' }} className="btn-add-f" onClick={() => {
+              setShowModal(true)
+            }}
+            >Thêm lịch trình</span>
           </div>
-          <div className="cover-btn-schedule">
-            <div className="btn-search-f">Tìm kiếm</div>
-            <div className="btn-add-f">Thêm tàu đi</div>
-          </div>
+
         </div>
 
       </div>
@@ -51,85 +149,149 @@ export default function Schedule() {
           <table className="table table-bordered">
             <thead className="et-table-header">
               <tr>
-                <th className="mac-train ng-binding">Mác tàu
-                </th>
-                <th className="ng-binding mun-train">Số toa
-                </th>
-                <th className="ng-binding train-in-header">Nhân viên
-                </th>
-                <th className="ng-binding train-in-header">Thông tin toa
-                </th>
-                <th className="ng-binding train-in-header">
-                </th>
-                <th className="ng-binding train-money-header">Thành tiền (VNĐ)
-                </th>
+                <th className="ng-binding train-in-header" style={{ width: '15%' }}>Ngày đi</th>
+                <th className="ng-binding train-in-header" style={{ width: '15%' }}>Giờ đi</th>
+                <th className="ng-binding train-in-header" style={{ width: '20%' }}>Mã tàu</th>
+                <th className="ng-binding train-in-header" style={{ width: '20%' }}>Ga khởi hành</th>
+                <th className="ng-binding train-in-header" style={{ width: '15%' }}>Số lượng toa</th>
+                <th className="ng-binding train-in-header" style={{ width: '15%' }}>Số lượng chỗ</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="et-table-cell tabl-cell">
-
-                </td>
-                <td className="intab">
-                  <div className="text-center ng-hide">
-                    {/* <img src="/images/waring20.png" tooltip="" class="ng-scope"> */}
-                  </div>
-                  <div className="text-center text-info">
-                    {/* <!--Giữ trong <span class="text-danger">{{ve.seat.Status.Duration}}</span> giây--> */}
-                    <span ng-bind-html="'PBuyTicket_thoiGianTamGiu'|translate:ve.seat.Status.Duration" className="ng-binding">Giữ trong <span className="text-danger">544</span> giây</span>
-                  </div>
-                  <div>
-                    <div className="ng-binding">
-                      SE8 Sài Gòn-Hà Nội
-                    </div>
-                    <div className="ng-binding">
-                      21/11/2020 06:00
-                    </div>
-                    <div className="ng-binding">
-                      {/* <!--{{'Toa ' + ve.carNo + ' chỗ ' + ve.seat.ChoSo}}--> */}
-                      Toa 6 chỗ 40
-                    </div>
-                    <div className="ng-binding">
-                      Nằm khoang 6 điều hòa T2
-                    </div>
-                  </div>
-                </td>
-                <td className="et-table-cell text-right ng-binding tag-mone">
-                  1,237,000
-                </td>
-                <td className="et-table-cell text-left tag-mone">
-                  {/* <!-- <div ng-show="!ve.isloadedKhuyenMai" class="ng-binding ng-hide">
-                            Đang tìm khuyến mại...
-                            Dang tìm khuyến mại...
-                        </div> --> */}
-                  <div ng-show="ve.isloadedKhuyenMai">
-                    <div ng-show="ve.ListKhuyenMai.length==0" className="ng-binding ng-hide">
-                      {/* <!-- Không có khuyến mại cho vé này -->
-                            <!--Không có khuyến mại--> */}
-                    </div>
-                    <div ng-show="ve.ListKhuyenMai.length>0" >
-                      <div ng-show="ve.ListKhuyenMaiIDApDung.length>0">
-                        <div>
-                          <div>
-                            <span className="ng-binding font-size12px">GIẢM GIÁ XA NGÀY THEO CĐ 75/VTSG (SE7/8, SE10) - THẤP ĐIỂM SAU TẾT - thêm 277/VTSG ngày 04/03/2020</span>
-                            <span className="ng-binding font-size12px">(giảm 62,000)</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td className="et-table-cell text-right ng-binding tag-mone">
-                  1,000
-                </td>
-                <td className="et-table-cell text-right ng-binding tag-mone">
-                  1,176,000
-                </td>
-              </tr>
+              {dataSchedule.map((item, index) => {
+                return (
+                  <tr>
+                    <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.dateStart}</td>
+                    <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.time.split(':')[0] + "h" + item.time.split(':')[1] + "p"}</td>
+                    <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.train.idShow}</td>
+                    <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.station}</td>
+                    <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.train.carriage.length}</td>
+                    <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>420</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
+          <Pagination defaultPageSize={1} current={currentPage} total={totalPage}
+            onChange={(page) => {
+              setCurrentPage(page)
+              if (dataSearch.trim() === '') {
+                getDataScheduleByPage(page - 1)
+              } else {
+              }
+            }}
+          >
+          </Pagination>
         </div>
       </div>
+      <Modal show={showModal} size='sm'>
+        <Modal.Header>
+          <Modal.Title>Thêm lịch trình</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form >
+            <Form.Item >
+              <DatePicker className="form-control select-style-sarch"
+                placeholderText="Ngày đi"
+                onChange={(date) => {
+                  var date2 = new Date(date.getTime() + 86400000 * 2)
+                  var dateFormat = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(date)
+                  var dateFormat2 = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(date2)
+                  setSchedule({
+                    ...schedule,
+                    dateStart: dateFormat,
+                    dateReturn: dateFormat2,
+                    station: 'Hà Nội',
+                    stationRev: 'Sài Gòn'
+                  })
+                  dispatch({ type: "RELOAD" })
+                }}
+                value={schedule.dateStart}
+              />
+            </Form.Item>
+            <Form.Item>
+              <select
+                defaultValue=""
+                className="form-control select-style-sarch width95percent"
+                onChange={(e) => {
+                  setSchedule({
+                    ...schedule,
+                    time: e.target.value,
+                    station: 'Hà Nội',
+                    stationRev: 'Sài Gòn'
+                  })
+                  dispatch({ type: "RELOAD" })
+                }}
+              >
+                <option value="" disabled >Thời gian chạy</option>
+                <option value='6:00'>6 giờ</option>
+                <option value='15:20'>15 giờ 20</option>
+              </select>
+            </Form.Item>
+            <Form.Item>
+              <label className='col-6'>
+                <b>Tàu: </b>
+              </label>
+              <span>{schedule.train && 'Tàu ' + schedule.train.idShow + " - " + schedule.train.carriage.length + " toa"}</span>
+            </Form.Item>
+            <Form.Item>
+              <label className='col-6'>
+                <b>Giờ khởi hành: </b>
+              </label>
+              <span>{schedule.time}</span>
+            </Form.Item>
+            <Form.Item>
+              <label className='col-6'>
+                <b>Ngày đi: </b>
+              </label>
+              <span>{schedule.dateStart}</span>
+            </Form.Item>
+            <Form.Item>
+              <label className='col-6'>
+                <b>Ga đi: </b>
+              </label>
+              <span>{schedule.station}</span>
+            </Form.Item>
+            <Form.Item>
+              <label className='col-6'>
+                <b>Ngày về: </b>
+              </label>
+              <span>{schedule.dateReturn}</span>
+            </Form.Item>
+            <Form.Item>
+              <label className='col-6'>
+                <b>Ga về: </b>
+              </label>
+              <span>{schedule.stationRev}</span>
+            </Form.Item>
+            <h6 style={{ textAlign: 'center', color: 'red' }}>{messages}</h6>
+            <Modal.Footer>
+              <button className='btn btn-light' onClick={() => {
+                setShowModal(false)
+                setMessages('')
+                setSchedule({
+                  dateStart: '',
+                  dateReturn: '',
+                  time: '',
+                  station: '',
+                  stationRev: '',
+                  train: {
+                    idShow: '',
+                    carriage: [],
+                  }
+                })
+              }}>
+                Close
+              </button>
+              <button className='btn btn-success' onClick={() => {
+                isEmpty ? createSchedule() : setMessages('Thông tin không hợp lệ')
+              }}>
+                Accept
+              </button>
+            </Modal.Footer>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   )
 }

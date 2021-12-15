@@ -758,6 +758,194 @@ app.put('/api/ticket-status-3', async (req, res) => {
 		message: 'Yêu cầu đã được gửi đợi BookingOnile xác nhận'
 	})
 })
+app.get('/api/schedule-page', async (req, res) => {
+	await client.connect()
+	let { page } = req.query
+
+	let allOrder = await colSchedule.find().toArray()
+	let totalPage = Math.ceil(parseInt(allOrder.length) / itemPerPage);
+	let result = await colSchedule.find({}).sort({ dateStart: -1 }).limit(itemPerPage).skip(itemPerPage * page).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result,
+		totalPage: totalPage
+	})
+})
+app.get('/api/schedule-search', async (req, res) => {
+	await client.connect()
+	let { page, search } = req.query
+
+	let searchSchedule = await colSchedule.find({
+		$or: [
+			{
+				dateStart: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				time: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				'train.idShow': {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				station: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			}
+		]
+	}).toArray()
+	let totalPage = Math.ceil(parseInt(searchSchedule.length) / itemPerPage);
+	let result = await colSchedule.find({
+		$or: [
+			{
+				dateStart: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				time: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				'train.idShow': {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				station: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			}
+		]
+	}).sort({ _id: -1 }).limit(itemPerPage).skip(itemPerPage * page).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result,
+		totalPage: totalPage
+	})
+	// console.log(result)
+})
+app.post('/api/schedule-value', async (req, res) => {
+	// 0 se12
+	// 1 se34
+	// 2 se56
+	// 3 se78
+	let dateDefault = new Date('1/1/2022')
+	let dateDefault2 = new Date(req.body.schedule.dateStart)
+	let numDate = ((Math.abs(dateDefault2 - dateDefault)) / 86400000) % 4
+
+	let date = req.body.schedule.dateStart
+	let time = req.body.schedule.time
+
+	// console.log(time + " " + numDate)
+	await client.connect()
+	let result = await colSchedule.findOne({ dateStart: date, time: time, station: "Hà Nội" })
+	if (result) {
+		res.status(200).json({
+			status: 'success',
+			message: 'Đã có lịch trình',
+			data: result
+		})
+	} else {
+		if (time === '6:00' && numDate === 0) {
+			let result1 = await colTrain.findOne({ idShow: 'SE1' })
+			res.status(200).json({
+				status: 'fail',
+				data: result1
+			})
+		} else if (time === '15:20' && numDate === 0) {
+			let result2 = await colTrain.findOne({ idShow: 'SE2' })
+			res.status(200).json({
+				status: 'fail',
+				data: result2
+			})
+		} else if (time === '6:00' && numDate === 1) {
+			let result3 = await colTrain.findOne({ idShow: 'SE3' })
+			res.status(200).json({
+				status: 'fail',
+				data: result3
+			})
+		} else if (time === '15:20' && numDate === 1) {
+			let result4 = await colTrain.findOne({ idShow: 'SE4' })
+			res.status(200).json({
+				status: 'fail',
+				data: result4
+			})
+		} else if (time === '6:00' && numDate === 2) {
+			let result5 = await colTrain.findOne({ idShow: 'SE5' })
+			res.status(200).json({
+				status: 'fail',
+				data: result5
+			})
+		} else if (time === '15:20' && numDate === 2) {
+			let result6 = await colTrain.findOne({ idShow: 'SE6' })
+			res.status(200).json({
+				status: 'fail',
+				data: result6
+			})
+		} else if (time === '6:00' && numDate === 3) {
+			let result7 = await colTrain.findOne({ idShow: 'SE7' })
+			res.status(200).json({
+				status: 'fail',
+				data: result7
+			})
+		} else if (time === '15:20' && numDate === 3) {
+			let result8 = await colTrain.findOne({ idShow: 'SE8' })
+			res.status(200).json({
+				status: 'fail',
+				data: result8
+			})
+		}else{
+			res.status(200).json({
+				status: 'waitting',
+			})
+		}
+	}
+})
+
+app.post('/api/schedule-add', async (req, res) => {
+	let { schedule } = req.body
+	let schedule1 = {
+		dateStart: schedule.dateStart,
+		time: schedule.time,
+		station: schedule.station,
+		trainId: schedule.train._id,
+		train: schedule.train
+	}
+	let schedule2 = {
+		dateStart: schedule.dateReturn,
+		time: schedule.time,
+		station: schedule.stationRev,
+		trainId: schedule.train._id,
+		train: schedule.train
+	}
+	let result = colSchedule.insertMany([schedule1, schedule2])
+	if (result) {
+		res.status(200).json({
+			status: 'success',
+			message: 'Thêm lịch trình thành công'
+		})
+	} else {
+		res.status(200).json({
+			status: 'fail',
+			message: 'Thêm lịch thất bại'
+		})
+	}
+})
 
 
 app.post('/api/login', async (req, res) => {
@@ -802,7 +990,10 @@ app.post('/api/login', async (req, res) => {
 	}
 })
 
-
+function dateDecrease1(date, num) {
+	let lastDate = (new Date(date).getTime() + 86400000)
+	return (new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(lastDate))
+}
 app.get('/demo', async (req, res) => {
-	// console.log(dateDecrease1('1/1/2021',2))
+	console.log(dateDecrease1('1/1/2021', 2))
 })

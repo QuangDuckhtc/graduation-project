@@ -49,13 +49,13 @@ export default function Navigation() {
               </div>
             </Link>
           </div>
-          <div className={role === 0 ? 'padding-top-10' : 'padding-top-10 class-hide'} >
+          {/* <div className={role === 0 ? 'padding-top-10' : 'padding-top-10 class-hide'} >
             <Link to="/revenue">
               <div className="btn-menu">
                 <i className="fa fa-calculator fa-menu"></i>Thống kê doanh thu
               </div>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
