@@ -7,6 +7,7 @@ import DetailSchedule from "../Schedule/detailSchedule";
 import Payment from "../Payment/payment";
 import Regulation from "../Orther/regulation";
 import Handbook from "../Orther/handbook";
+import OrderDetail from "../Schedule/orderDeatail";
 
 export{
   Home,
@@ -18,4 +19,5 @@ export{
   Payment,
   Regulation,
   Handbook,
+  OrderDetail,
 }

@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Header, Footer, Home, Schedule, DetailSchedule, Payment, Regulation, Handbook } from './Index';
+import { Header, Footer, Home, Schedule, DetailSchedule, Payment, Regulation, Handbook,OrderDetail } from './Index';
 
 export default function App() {
   return (
@@ -16,6 +16,7 @@ export default function App() {
           <Route path='/payment' component={Payment} />
           <Route path='/regulation' component={Regulation} />
           <Route path='/handbook' component={Handbook} />
+          <Route path='/order' component={OrderDetail} />
         </Switch>
         <Footer />
       </Router>

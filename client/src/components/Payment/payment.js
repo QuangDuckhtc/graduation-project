@@ -13,6 +13,7 @@ export default function Payment() {
   const [dataCart, setDataCart] = useState(JSON.parse(localStorage.getItem('cart')))
   const [disable, setDisable] = useState(true)
   const [dataOrder, setDataOrder] = useState({
+    idShow: '',
     customerName: '',
     phone: '',
     email: '',
@@ -92,6 +93,7 @@ export default function Payment() {
   function getDataOrderDefault() {
     setDataOrder({
       ...dataOrder,
+      idShow: 'ORDER-' + new Date().toISOString(),
       countTicket: dataCart.length,
       date: new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(new Date()),
       totalPrice: totalPrice(),

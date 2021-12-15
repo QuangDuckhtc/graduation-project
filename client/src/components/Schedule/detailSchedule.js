@@ -50,6 +50,7 @@ export default function DetailSchedule() {
   const [arrTickets, setArrTickets] = useState([])
   const [arrTickets1, setArrTickets1] = useState([])
   const [ticket, setTicket] = useState({
+    idShow: '',
     idSchedule: '',
     price: '',
     priceDiscount: '',
@@ -133,7 +134,6 @@ export default function DetailSchedule() {
   async function getDataDefault() {
     await axios.post('/schedule', { arrData: dataSchedule }
     ).then(async function (res) {
-      console.log(res.data.schedule)
       if (res.data.status === 'success') {
         let price = parseInt(res.data.schedule[0][0].train.carriage[0].unitPrice) * Math.abs(parseInt(res.data.stationFrom.distance) - parseInt(res.data.stationTo.distance))
 
@@ -530,6 +530,7 @@ export default function DetailSchedule() {
                                     if (_findIndex(arrTickets, { seat: item }) < 0) {
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
                                       let indexCart = _findIndex(cart, { idSeat: item })
@@ -573,9 +574,16 @@ export default function DetailSchedule() {
                                   onClick={() => {
                                     setTicket({
                                       ...ticket,
+                                      idShow: item + "-" + new Date().toISOString(),
                                       idSeat: item
                                     })
-                                    dispatch({ type: 'RELOAD_SEAT' })
+                                    let indexCart = _findIndex(cart, { idSeat: item })
+                                    if (indexCart < 0) {
+                                      dispatch({ type: 'RELOAD_SEAT' })
+                                    } else {
+                                      cart.splice(indexCart, 1)
+                                      dispatch({ type: 'RELOAD_CART' })
+                                    }
                                   }}
                                 >
                                   <div className="et-car-seat-right et-seat-h-35">
@@ -607,12 +615,18 @@ export default function DetailSchedule() {
                                 index % 2 === 0 ?
                                   <div className="et-col-1-20 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
-                                      // setChangSeat(0)
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-car-seat-left et-seat-h-35">
@@ -630,11 +644,17 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
-
                                   >
                                     <div className="et-car-seat-left et-seat-h-35">
                                       <div className="et-col-84 et-sit-sur-outer">
@@ -680,9 +700,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">
@@ -708,9 +735,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">
@@ -759,9 +793,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">
@@ -786,9 +827,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">
@@ -812,9 +860,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket({
                                         ...ticket,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">
@@ -847,9 +902,16 @@ export default function DetailSchedule() {
                                   onClick={() => {
                                     setTicket1({
                                       ...ticket1,
+                                      idShow: item + "-" + new Date().toISOString(),
                                       idSeat: item
                                     })
-                                    dispatch({ type: 'RELOAD_SEAT1' })
+                                    let indexCart = _findIndex(cart, { idSeat: item })
+                                    if (indexCart < 0) {
+                                      dispatch({ type: 'RELOAD_SEAT1' })
+                                    } else {
+                                      cart.splice(indexCart, 1)
+                                      dispatch({ type: 'RELOAD_CART' })
+                                    }
                                   }}
                                 >
                                   <div className="et-car-seat-right et-seat-h-35">
@@ -878,9 +940,16 @@ export default function DetailSchedule() {
                                   onClick={() => {
                                     setTicket1({
                                       ...ticket1,
+                                      idShow: item + "-" + new Date().toISOString(),
                                       idSeat: item
                                     })
-                                    dispatch({ type: 'RELOAD_SEAT1' })
+                                    let indexCart = _findIndex(cart, { idSeat: item })
+                                    if (indexCart < 0) {
+                                      dispatch({ type: 'RELOAD_SEAT1' })
+                                    } else {
+                                      cart.splice(indexCart, 1)
+                                      dispatch({ type: 'RELOAD_CART' })
+                                    }
                                   }}
                                 >
                                   <div className="et-car-seat-right et-seat-h-35">
@@ -912,12 +981,18 @@ export default function DetailSchedule() {
                                 index % 2 === 0 ?
                                   <div className="et-col-1-20 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
-                                      // setChangSeat(0)
                                       setTicket1({
                                         ...ticket1,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT1' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT1' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-car-seat-left et-seat-h-35">
@@ -935,9 +1010,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket1({
                                         ...ticket1,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT1' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT1' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-car-seat-left et-seat-h-35">
@@ -983,9 +1065,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket1({
                                         ...ticket1,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT1' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT1' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">
@@ -1011,9 +1100,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket1({
                                         ...ticket1,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT1' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT1' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">
@@ -1063,9 +1159,16 @@ export default function DetailSchedule() {
                                     onClick={() => {
                                       setTicket1({
                                         ...ticket1,
+                                        idShow: item + "-" + new Date().toISOString(),
                                         idSeat: item
                                       })
-                                      dispatch({ type: 'RELOAD_SEAT1' })
+                                      let indexCart = _findIndex(cart, { idSeat: item })
+                                      if (indexCart < 0) {
+                                        dispatch({ type: 'RELOAD_SEAT1' })
+                                      } else {
+                                        cart.splice(indexCart, 1)
+                                        dispatch({ type: 'RELOAD_CART' })
+                                      }
                                     }}
                                   >
                                     <div className="et-bed-left">

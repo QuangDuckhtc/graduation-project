@@ -21,10 +21,10 @@ export default function Header() {
                 <Link to='/schedule' className="nav-link" >THÔNG TIN LỊCH TRÌNH</Link>
               </li>
               <li className="nav-item">
-                <Link to='/' className="nav-link" >QUẢN LÝ ĐẶT CHỖ</Link>
+                <Link to='/order' className="nav-link" >QUẢN LÝ ĐẶT CHỖ</Link>
               </li>
               <li className="nav-item">
-                <Link to='/handbook' className="nav-link" >CẨN NANG ĐI TÀU</Link>
+                <Link to='/handbook' className="nav-link" >CẨM NANG ĐI TÀU</Link>
               </li>
             </ul>
           </div>
