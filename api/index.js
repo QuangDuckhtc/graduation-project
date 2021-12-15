@@ -710,6 +710,15 @@ app.get('/api/ticket-idorder', async (req, res) => {
 		data: result
 	})
 })
+app.get('/api/ticket-idorder-4', async (req, res) => {
+	let { idOrder } = req.query
+	await client.connect()
+	let result = await colTicket.find({ idOrder: idOrder, status: { $ne: 4 } }).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result
+	})
+})
 app.put('/api/ticket-status', async (req, res) => {
 	let { id } = req.query
 	await client.connect()
@@ -738,6 +747,15 @@ app.put('/api/tickets-delete', async (req, res) => {
 	res.status(200).json({
 		status: 'success',
 		message: 'Đã hủy vé'
+	})
+})
+app.put('/api/ticket-status-3', async (req, res) => {
+	let { id } = req.query
+	await client.connect()
+	await colTicket.updateOne({ _id: ObjectId(id) }, { $set: { status: 3 } })
+	res.status(200).json({
+		status: 'success',
+		message: 'Yêu cầu đã được gửi đợi BookingOnile xác nhận'
 	})
 })
 

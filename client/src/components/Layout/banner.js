@@ -15,7 +15,7 @@ export default function Banner() {
         <Carousel.Item interval={3000}>
           <img
             className="d-block w-100"
-            src="images/TauQua2020.png"
+            src="images/tau1.png"
             alt="Third slide"
             style={{ height: '500px' }}
           />
