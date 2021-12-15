@@ -29,7 +29,7 @@ export default function Navigation() {
             </Link>
           </div>
           <div className="padding-top-10" >
-            <Link to="/detail-ticket">
+            <Link to={`/ticket/all`}>
               <div className="btn-menu">
                 <i className="fas fa-ticket-alt fa-menu"></i>Danh dách vé
               </div>

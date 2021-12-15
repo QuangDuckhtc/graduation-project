@@ -6,7 +6,7 @@ import Order from '../Management/order';
 import Customer from '../Management/customer';
 import Navigation from "../Layout/navigation";
 import Home from "../Home/home";
-import DetailTicket from "../Management/detailTicket";
+import Ticket from "../Management/ticket";
 
 export {
   Header,
@@ -17,5 +17,5 @@ export {
   Customer,
   Navigation,
   Home,
-  DetailTicket,
+  Ticket,
 }

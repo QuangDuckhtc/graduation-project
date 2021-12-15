@@ -28,63 +28,67 @@ function slugName(str) {
 	return str;
 }
 
-function dateIncrease(date) {
-	let day = new Date(date).getDate()
-	let month = new Date(date).getMonth() + 1
-	let year = new Date(date).getFullYear()
-	if (day === 31 && month === 12) {
-		year++
-		return ('1/1/' + year)
-	} else if (day === 28 && month === 2 && year % 4 !== 0) {
-		month++
-		return (month + '/1/' + year)
-	} else if (day === 29 && month === 2) {
-		month++
-		return (month + '/1/' + year)
-	} else if (day === 31) {
-		month++
-		return (month + '/1/' + year)
-	} else if ((day === 30 && month === 4) || (day === 30 && month === 6) || (day === 30 && month === 9) || day === 30 && month === 1) {
-		month++
-		return (month + '/1/' + year)
-	} else {
-		day++
-		return (month + '/' + day + '/' + year)
-	}
-}
+// function dateIncrease(date) {
+// 	let day = new Date(date).getDate()
+// 	let month = new Date(date).getMonth() + 1
+// 	let year = new Date(date).getFullYear()
+// 	if (day === 31 && month === 12) {
+// 		year++
+// 		return ('1/1/' + year)
+// 	} else if (day === 28 && month === 2 && year % 4 !== 0) {
+// 		month++
+// 		return (month + '/1/' + year)
+// 	} else if (day === 29 && month === 2) {
+// 		month++
+// 		return (month + '/1/' + year)
+// 	} else if (day === 31) {
+// 		month++
+// 		return (month + '/1/' + year)
+// 	} else if ((day === 30 && month === 4) || (day === 30 && month === 6) || (day === 30 && month === 9) || day === 30 && month === 1) {
+// 		month++
+// 		return (month + '/1/' + year)
+// 	} else {
+// 		day++
+// 		return (month + '/' + day + '/' + year)
+// 	}
+// }
 
-function dateDecrease(date) {
-	let day = new Date(date).getDate()
-	let month = new Date(date).getMonth() + 1
-	let year = new Date(date).getFullYear()
-	if (day === 1) {
-		if (month === 1) { //ngay 1/1
-			year--
-			return ('12/31/' + year)
-		} else if (month === 2 || month === 4 || month === 6 || month === 8 || month === 9 || month === 11) {//31 ngay
-			month--
-			return (month + '31/' + year)
-		} else if (month === 3) {
-			month--
-			if (year % 4 === 0) {
-				return (month + '/29/' + year)
-			} else {
-				return (month + '/28/' + year)
-			}
-		} else {
-			return (month + '/30/' + year)
-		}
-	} else {
-		day--
-		return (month + '/' + day + '/' + year)
-	}
+// function dateDecrease(date) {
+// 	let day = new Date(date).getDate()
+// 	let month = new Date(date).getMonth() + 1
+// 	let year = new Date(date).getFullYear()
+// 	if (day === 1) {
+// 		if (month === 1) { //ngay 1/1
+// 			year--
+// 			return ('12/31/' + year)
+// 		} else if (month === 2 || month === 4 || month === 6 || month === 8 || month === 9 || month === 11) {//31 ngay
+// 			month--
+// 			return (month + '31/' + year)
+// 		} else if (month === 3) {
+// 			month--
+// 			if (year % 4 === 0) {
+// 				return (month + '/29/' + year)
+// 			} else {
+// 				return (month + '/28/' + year)
+// 			}
+// 		} else {
+// 			return (month + '/30/' + year)
+// 		}
+// 	} else {
+// 		day--
+// 		return (month + '/' + day + '/' + year)
+// 	}
+// }
+function dateDecrease(date, num) {
+	let lastDate = new Date(date) - 86400000 * num
+	return (new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(lastDate))
 }
 
 const DbUrl = 'mongodb://localhost:27017';
 // const DbUrl = 'mongodb+srv://admin:admin123456@develop.o5a0o.mongodb.net/test'
 const DbName = 'BookingOnline';
 
-const itemPerPage = 8;
+const itemPerPage = 7;
 //Table
 const User = 'User';
 const Train = 'Train'
@@ -95,6 +99,7 @@ const Order = 'Order'
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
+const { query } = require("express");
 const client = new MongoClient(DbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 const colUser = client.db(DbName).collection(User);
 const colOrder = client.db(DbName).collection(Order);
@@ -158,15 +163,18 @@ app.get('/api/seat', async (req, res) => {
 app.get('/api/station', async (req, res) => {
 	await client.connect()
 	let result = await colStation.find().toArray();
+	let result1 = await colStation.find().sort({ _id: -1 }).toArray();
 	res.status(200).json({
 		status: 'success',
-		data: result
+		data: result,
+		data1: result1
 	})
 })
 app.post('/api/schedule', async (req, res) => {
 	await client.connect()
 	let arrData = req.body.arrData
 	let arrSchedule = []
+	console.log(arrData)
 	arrData.forEach(async (item, index) => {
 		let result = await colStation.findOne({ _id: ObjectId(item.stationFrom) });
 		let result2 = await colStation.findOne({ _id: ObjectId(item.stationTo) });
@@ -182,18 +190,16 @@ app.post('/api/schedule', async (req, res) => {
 							stationFrom: result,
 							stationTo: result2
 						})
-					// console.log(arrSchedule);
 
 				} else {
 					res.status(200).json({
 						status: 'fail',
 						message: 'Không có lịch trình phù hợp'
 					})
-
 				}
 			} else if (result.idShow > 11 && result.idShow < 17) {
-				let schedule1 = await colSchedule.find({ dateStart: item.date, station: 'Hà Nội', time: '6:00' }).toArray();
-				let schedule2 = await colSchedule.find({ dateStart: dateDecrease(item.date), station: 'Hà Nội', time: '15:20' }).toArray();
+				let schedule1 = await colSchedule.find({ dateStart: dateDecrease(item.date, 1), station: 'Hà Nội', time: '15:20' }).toArray();
+				let schedule2 = await colSchedule.find({ dateStart: item.date, station: 'Hà Nội', time: '6:00' }).toArray();
 				if (schedule1.length > 0 && schedule2.length > 0) {
 					schedule1.push(schedule2[0])
 					arrSchedule.push(schedule1);
@@ -222,7 +228,7 @@ app.post('/api/schedule', async (req, res) => {
 					})
 				}
 			} else if (result.idShow > 16 && result.idShow < 28) {
-				let schedule3 = await colSchedule.find({ dateStart: dateDecrease(item.date), station: 'Hà Nội' }).toArray();
+				let schedule3 = await colSchedule.find({ dateStart: dateDecrease(item.date, 1), station: 'Hà Nội' }).toArray();
 				if (schedule3.length > 0) {
 					arrSchedule.push(schedule3);
 					(index + 1) === arrData.length &&
@@ -240,9 +246,21 @@ app.post('/api/schedule', async (req, res) => {
 					})
 				}
 			} else {
-				let schedule4 = await colSchedule.find({ dateStart: dateDecrease(item.date), station: 'Hà Nội', time: '6:00' }).toArray();
-				if (schedule4.length > 0) {
+				let schedule4 = await colSchedule.find({ dateStart: dateDecrease(item.date, 2), station: 'Hà Nội', time: '15:20' }).toArray();
+				let schedule41 = await colSchedule.find({ dateStart: dateDecrease(item.date, 1), station: 'Hà Nội', time: '6:00' }).toArray();
+				if (schedule4.length > 0 && schedule41.length > 0) {
+					schedule4.push(schedule41[0])
 					arrSchedule.push(schedule4);
+					(index + 1) === arrData.length &&
+						res.status(200).json({
+							status: 'success',
+							schedule: arrSchedule,
+							stationFrom: result,
+							stationTo: result2
+						})
+
+				} else if (schedule4.length > 0 || schedule41.length > 0) {
+					schedule4.length > 0 ? arrSchedule.push(schedule4) : arrSchedule.push(schedule41);
 					(index + 1) === arrData.length &&
 						res.status(200).json({
 							status: 'success',
@@ -278,8 +296,8 @@ app.post('/api/schedule', async (req, res) => {
 					})
 				}
 			} else if (result.idShow < 22 && result.idShow > 16) {
-				let schedule6 = await colSchedule.find({ dateStart: item.date, station: 'Sài Gòn', time: '6:00' }).toArray();
-				let schedule7 = await colSchedule.find({ dateStart: dateDecrease(item.date), station: 'Sài Gòn', time: '15:20' }).toArray();
+				let schedule6 = await colSchedule.find({ dateStart: dateDecrease(item.date, 1), station: 'Sài Gòn', time: '15:20' }).toArray();
+				let schedule7 = await colSchedule.find({ dateStart: item.date, station: 'Sài Gòn', time: '6:00' }).toArray();
 				if (schedule6.length > 0 && schedule7.length > 0) {
 					schedule6.push(schedule7[0]);
 					arrSchedule.push(schedule7);
@@ -308,7 +326,7 @@ app.post('/api/schedule', async (req, res) => {
 					})
 				}
 			} else if (result.idShow < 17 && result.idShow > 5) {
-				let schedule8 = await colSchedule.find({ dateStart: dateDecrease(item.date), station: 'Sài Gòn' }).toArray();
+				let schedule8 = await colSchedule.find({ dateStart: dateDecrease(item.date, 1), station: 'Sài Gòn' }).toArray();
 				if (schedule8.length > 0) {
 					arrSchedule.push(schedule8);
 					(index + 1) === arrData.length &&
@@ -325,10 +343,22 @@ app.post('/api/schedule', async (req, res) => {
 					})
 				}
 			} else {
-				let schedule9 = await colSchedule.find({ dateStart: dateDecrease(item.date), station: 'Sài Gòn', time: '6:00' }).toArray();
-				if (schedule9.length > 0) {
-					arrSchedule.push(schedule9);
+				let schedule9 = await colSchedule.find({ dateStart: dateDecrease(item.date, 2), station: 'Sài Gòn', time: '15:20' }).toArray();
+				let schedule91 = await colSchedule.find({ dateStart: dateDecrease(item.date, 1), station: 'Sài Gòn', time: '6:00' }).toArray();
+				if (schedule9.length > 0 && schedule91.length > 0) {
+					schedule9.push(schedule91[0]);
+					arrSchedule.push(schedule91);
 					(index + 1) === arrData.length &&
+						res.status(200).json({
+							status: 'success',
+							schedule: arrSchedule,
+							stationFrom: result,
+							stationTo: result2
+						})
+
+				} else if (schedule9.length > 0 || schedule91.length > 0) {
+					schedule9.length > 0 ? arrSchedule.push(schedule9) : arrSchedule.push(schedule91)
+						(index + 1) === arrData.length &&
 						res.status(200).json({
 							status: 'success',
 							schedule: arrSchedule,
@@ -362,6 +392,7 @@ app.post('/api/ticket', async (req, res) => {
 	// console.log(req.body.tickets)
 	let { tickets, order, statusTicket } = req.body
 	let dataTicket = {
+		idShow: '',
 		idSchedule: '',
 		idOrder: '',
 		nameCustomer: '',
@@ -389,10 +420,11 @@ app.post('/api/ticket', async (req, res) => {
 
 		tickets.forEach(async ticket => {
 			dataTicket = {
+				idShow: ticket.idShow,
 				idSchedule: ticket.idSchedule,
 				idOrder: resultOrder.insertedId.toString(),
 				customerName: ticket.customerName,
-				idCart: ticket.indentityCard,
+				idCard: ticket.indentityCard,
 				seat: ticket.idSeat,
 				carriage: ticket.nameCarriage,
 				timeStart: ticket.timeStart,
@@ -429,7 +461,7 @@ app.post('/api/ticket', async (req, res) => {
 				subject: 'Xác thực email mua vé trên Booking Online',
 				html: `
 				<h1>Cảm ơn bạn đã tin tưởng và đồng hành cùng vé tàu Online</h1>
-				<h4> 		+ Mã đặt: ${resultOrder.insertedId}</h4>
+				<h4> 		+ Mã đặt: ${order.idShow}</h4>
 				<h4>		+ Họ tên khách hàng: ${order.customerName}</h4>
 				<h4>		+ Số điện thoại: ${order.phone}</h4>
 				<h4>		+ Ngày đặt: ${order.date}</h4>
@@ -465,7 +497,7 @@ app.post('/api/ticket', async (req, res) => {
 app.get('/api/ticket', async (req, res) => {
 	let { idSchedule, idStationFrom, idStationTo } = req.query
 	let result = await colTicket.find({
-		idSchedule: idSchedule, status: { $ne: 4 }, $or: [
+		idSchedule: idSchedule, $or: [
 			{
 				'stationFrom.idShow': {
 					$gt: parseInt(idStationFrom),
@@ -498,15 +530,216 @@ app.get('/api/order-page', async (req, res) => {
 
 	let allOrder = await colOrder.find().toArray()
 	let totalPage = Math.ceil(parseInt(allOrder.length) / itemPerPage);
-	let result = await colOrder.find({}).sort({ _id: -1 }).linmit(itemPerPage).skip(itemPerPage * page).toArray()
+	let result = await colOrder.find({}).sort({ _id: -1 }).limit(itemPerPage).skip(itemPerPage * page).toArray()
 	res.status(200).json({
 		status: 'success',
 		data: result,
 		totalPage: totalPage
 	})
-	console.log(result)
+	// console.log(result)
 })
+app.get('/api/order-search', async (req, res) => {
+	// console.log(req.query.search)
+	await client.connect()
+	let { page, search } = req.query
 
+	let searchOrder = await colOrder.find({
+		$or: [
+			{
+				idShow: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				customerName: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				email: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				phone: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			}
+		]
+	}).toArray()
+	let totalPage = Math.ceil(parseInt(searchOrder.length) / itemPerPage);
+	let result = await colOrder.find({
+		$or: [
+			{
+				idShow: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				customerName: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				email: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				phone: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			}
+		]
+	}).sort({ _id: -1 }).limit(itemPerPage).skip(itemPerPage * page).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result,
+		totalPage: totalPage
+	})
+	// console.log(result)
+})
+app.get('/api/ticket-page', async (req, res) => {
+	await client.connect()
+	let { page } = req.query
+
+	let allTicket = await colTicket.find({}).toArray()
+	let totalPage = Math.ceil(parseInt(allTicket.length) / itemPerPage);
+	let result = await colTicket.find({}).sort({ _id: -1 }).limit(itemPerPage).skip(itemPerPage * page).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result,
+		totalPage: totalPage
+	})
+})
+app.get('/api/ticket-search', async (req, res) => {
+	await client.connect()
+	let { page, search } = req.query
+
+	let searchOrder = await colTicket.find({
+
+		$or: [
+			{
+				idShow: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				customerName: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				idOrder: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				seat: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				date: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			}
+		]
+	}).toArray()
+	let totalPage = Math.ceil(parseInt(searchOrder.length) / itemPerPage);
+	let result = await colTicket.find({
+		$or: [
+			{
+				idShow: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				customerName: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				idOrder: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				seat: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			},
+			{
+				date: {
+					"$regex": search,
+					'$options': '$i'
+				}
+			}
+		]
+	}).sort({ _id: -1 }).limit(itemPerPage).skip(itemPerPage * page).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result,
+		totalPage: totalPage
+	})
+	// console.log(result)
+})
+app.get('/api/ticket-idorder', async (req, res) => {
+	let { idOrder } = req.query
+	await client.connect()
+	let result = await colTicket.find({ idOrder: idOrder }).toArray()
+	res.status(200).json({
+		status: 'success',
+		data: result
+	})
+})
+app.put('/api/ticket-status', async (req, res) => {
+	let { id } = req.query
+	await client.connect()
+	let result = await colTicket.updateOne({ _id: ObjectId(id) }, { $set: { status: 2 } })
+	res.status(200).json({
+		status: 'success',
+		message: 'In vé thành công'
+	})
+})
+app.put('/api/ticket-delete', async (req, res) => {
+	let { id } = req.query
+	await client.connect()
+	await colTicket.updateOne({ _id: ObjectId(id) }, { $set: { status: 4 } })
+	res.status(200).json({
+		status: 'success',
+		message: 'Đã hủy vé'
+	})
+})
+app.put('/api/tickets-delete', async (req, res) => {
+	let { idOrder } = req.query
+	await client.connect()
+	let result = await colTicket.find({ idOrder: idOrder }).toArray()
+	result.forEach(async ticket => {
+		await colTicket.updateOne({ _id: ObjectId(ticket._id) }, { $set: { status: 4 } })
+	})
+	res.status(200).json({
+		status: 'success',
+		message: 'Đã hủy vé'
+	})
+})
 
 
 app.post('/api/login', async (req, res) => {
@@ -551,14 +784,7 @@ app.post('/api/login', async (req, res) => {
 	}
 })
 
+
 app.get('/demo', async (req, res) => {
-	// var arr = []
-	// for (var i = 1; i < 41; i++) {
-	// 	var string = `SE2-NM1-G${i}`
-	// 	arr.push(string)
-	// }
-	// let date = new Date('10/1/2021').getDate()-1
-	// res.json({
-	// 	date,
-	// })
+	// console.log(dateDecrease1('1/1/2021',2))
 })
