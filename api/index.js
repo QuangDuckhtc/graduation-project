@@ -453,14 +453,14 @@ app.get('/api/ticket', async (req, res) => {
 		idSchedule: idSchedule, $or: [
 			{
 				'stationFrom.idShow': {
-					$gt: parseInt(idStationFrom),
-					$lt: parseInt(idStationTo)
+					$gte: parseInt(idStationFrom),
+					$lte: parseInt(idStationTo)
 				},
 			},
 			{
 				'stationTo.idShow': {
-					$gt: parseInt(idStationFrom),
-					$lt: parseInt(idStationTo)
+					$gte: parseInt(idStationFrom),
+					$lte: parseInt(idStationTo)
 				},
 			}]
 	}).toArray()
