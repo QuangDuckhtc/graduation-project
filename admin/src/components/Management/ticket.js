@@ -221,12 +221,28 @@ export default function Ticket(props) {
           </Form.Item>
           <Form.Item>
             <label className='col-4'>
-              <b>Ga: </b>
+              <b>Ga đi: </b>
             </label>
             <span>
               {dataTicket[indexTicket] && dataTicket[indexTicket].stationFrom.name}
             </span>
           </Form.Item>
+          <Form.Item>
+            <label className='col-4'>
+              <b>Ga đến: </b>
+            </label>
+            <span>
+              {dataTicket[indexTicket] && dataTicket[indexTicket].stationTo.name}
+            </span>
+          </Form.Item>
+                <Form.Item>
+                  <label className='col-4'>
+                    <b>Gía vé: </b>
+                  </label>
+                  <span>
+                    {dataTicket[indexTicket] && format_curency(dataTicket[indexTicket].price.toString())+" VND"}
+                  </span>
+                </Form.Item>
         </Form>
         <Modal.Footer>
           <button className='btn btn-light' onClick={() => {

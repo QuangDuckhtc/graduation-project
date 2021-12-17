@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="footer-info">
             <p><i className="fa fa-map-marker mr-3"></i> 12 Nguyễn Văn Bảo, Phường 4, Gò Vấp, TP.HCM</p>
             <p><i className="fas fa-phone mr-3"></i> 0999999999</p>
-            <p><i className="fas fa-envelope mr-3"></i> vetautructuyen@gmail.com</p>
+            <p><i className="fas fa-envelope mr-3"></i> quangducfit.khtc@gmail.com</p>
           </div>
         </div>
         <div className="width33percent text-center">

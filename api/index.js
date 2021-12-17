@@ -27,58 +27,11 @@ function slugName(str) {
 	str = str.replace(/ /g, "-");
 	return str;
 }
+function format_curency(a) {
+    a = a.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    return a;
+  }
 
-// function dateIncrease(date) {
-// 	let day = new Date(date).getDate()
-// 	let month = new Date(date).getMonth() + 1
-// 	let year = new Date(date).getFullYear()
-// 	if (day === 31 && month === 12) {
-// 		year++
-// 		return ('1/1/' + year)
-// 	} else if (day === 28 && month === 2 && year % 4 !== 0) {
-// 		month++
-// 		return (month + '/1/' + year)
-// 	} else if (day === 29 && month === 2) {
-// 		month++
-// 		return (month + '/1/' + year)
-// 	} else if (day === 31) {
-// 		month++
-// 		return (month + '/1/' + year)
-// 	} else if ((day === 30 && month === 4) || (day === 30 && month === 6) || (day === 30 && month === 9) || day === 30 && month === 1) {
-// 		month++
-// 		return (month + '/1/' + year)
-// 	} else {
-// 		day++
-// 		return (month + '/' + day + '/' + year)
-// 	}
-// }
-
-// function dateDecrease(date) {
-// 	let day = new Date(date).getDate()
-// 	let month = new Date(date).getMonth() + 1
-// 	let year = new Date(date).getFullYear()
-// 	if (day === 1) {
-// 		if (month === 1) { //ngay 1/1
-// 			year--
-// 			return ('12/31/' + year)
-// 		} else if (month === 2 || month === 4 || month === 6 || month === 8 || month === 9 || month === 11) {//31 ngay
-// 			month--
-// 			return (month + '31/' + year)
-// 		} else if (month === 3) {
-// 			month--
-// 			if (year % 4 === 0) {
-// 				return (month + '/29/' + year)
-// 			} else {
-// 				return (month + '/28/' + year)
-// 			}
-// 		} else {
-// 			return (month + '/30/' + year)
-// 		}
-// 	} else {
-// 		day--
-// 		return (month + '/' + day + '/' + year)
-// 	}
-// }
 function dateDecrease(date, num) {
 	let lastDate = new Date(date) - 86400000 * num
 	return (new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' }).format(lastDate))
@@ -422,7 +375,7 @@ app.post('/api/ticket', async (req, res) => {
 			dataTicket = {
 				idShow: ticket.idShow,
 				idSchedule: ticket.idSchedule,
-				idOrder: resultOrder.insertedId.toString(),
+				idOrder: order.idShow,
 				customerName: ticket.customerName,
 				idCard: ticket.indentityCard,
 				seat: ticket.idSeat,
@@ -465,7 +418,7 @@ app.post('/api/ticket', async (req, res) => {
 				<h4>		+ Họ tên khách hàng: ${order.customerName}</h4>
 				<h4>		+ Số điện thoại: ${order.phone}</h4>
 				<h4>		+ Ngày đặt: ${order.date}</h4>
-				<h4>		+ Tổng tiền: ${order.totalPrice}</h4>
+				<h4>		+ Tổng tiền: ${format_curency(order.totalPrice.toString()) + " VND"}</h4>
 				<h4>		+ Tổng vé: ${order.countTicket}</h4>
 				`
 			};

@@ -129,7 +129,7 @@ export default function Order() {
                           <button className='btn btn-warning'
                             onClick={() => {
                               setShowModal(true)
-                              getDataTickets(item._id)
+                              getDataTickets(item.idShow)
                             }}
                           >Print</button>{"  "}
                           <Popconfirm title="Xác nhận hủy hết vé" okText="Yes" cancelText="No"
@@ -139,7 +139,7 @@ export default function Order() {
                           >
                             <button className='btn btn-danger'>Cancel</button>
                           </Popconfirm>{"  "}
-                          <Link to={`/ticket/${item._id}`} className='btn btn-primary'>Detail</Link>
+                          <Link to={`/ticket/${item.idShow}`} className='btn btn-primary'>Detail</Link>
                         </td>
                       </tr>
                     )
@@ -212,10 +212,26 @@ export default function Order() {
                 </Form.Item>
                 <Form.Item>
                   <label className='col-4'>
-                    <b>Ga: </b>
+                    <b>Ga đi: </b>
                   </label>
                   <span>
                     {item.stationFrom.name}
+                  </span>
+                </Form.Item>
+                <Form.Item>
+                  <label className='col-4'>
+                    <b>Ga đến: </b>
+                  </label>
+                  <span>
+                    {item.stationTo.name}
+                  </span>
+                </Form.Item>
+                <Form.Item>
+                  <label className='col-4'>
+                    <b>Gía vé: </b>
+                  </label>
+                  <span>
+                    {format_curency(item.price.toString())+" VND"}
                   </span>
                 </Form.Item>
               </Form>

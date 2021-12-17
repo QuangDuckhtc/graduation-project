@@ -104,7 +104,7 @@ export default function Schedule() {
                 setDisableSchedule(true)
                 setArrDataScheduleDetail([])
               }}>
-              <input className="form-control" type="text" placeholder="Vui lòng chọn ga đi bên dưới" value={dataSchedule.stationFrom.name} disabled />
+              <input className="form-control" style={{cursor:'pointer'}} type="text" placeholder="Vui lòng chọn ga đi bên dưới" value={dataSchedule.stationFrom.name} disabled />
             </div>
           </div>
           <div className="d-fix form-group">
@@ -118,7 +118,7 @@ export default function Schedule() {
                 setDisableSchedule(true)
                 setArrDataScheduleDetail([])
               }}>
-              <input className="form-control" type="text" placeholder="Vui lòng chọn ga đến bên dưới" value={dataSchedule.stationTo.name} disabled />
+              <input className="form-control" style={{cursor:'pointer'}} type="text" placeholder="Vui lòng chọn ga đến bên dưới" value={dataSchedule.stationTo.name} disabled />
             </div>
           </div>
           <div className="d-fix form-group">
@@ -132,7 +132,7 @@ export default function Schedule() {
                 setDisableSchedule(true)
                 setArrDataScheduleDetail([])
               }}>
-              <input className="form-control" type="text" placeholder="Chọn ngày bên dưới" value={dataSchedule.startDate} disabled />
+              <input className="form-control" type="text" style={{cursor:'pointer'}} placeholder="Chọn ngày bên dưới" value={dataSchedule.startDate} disabled />
             </div>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default function Schedule() {
           <h3 style={{ textAlign: 'center' }}>Ga đi</h3>
           {dataStation.map((item, index) => {
             return (
-              <input key={index} className="class-btn-station" value={item.name} readOnly style={{ marginBottom: '10px' }}
+              <input key={index} style={{cursor:'pointer'}} className="class-btn-station" value={item.name} readOnly style={{ marginBottom: '10px' }}
                 onClick={() => {
                   setDisableStationFrom(true)
                   setDisableStationTo(false)
@@ -167,7 +167,7 @@ export default function Schedule() {
           <h3 style={{ textAlign: 'center' }}>Ga đến</h3>
           {dataStation.map((item, index) => {
             return (
-              <input key={index} className="class-btn-station" value={item.name} readOnly style={{ marginBottom: '10px' }}
+              <input key={index} style={{cursor:'pointer'}} className="class-btn-station" value={item.name} readOnly style={{ marginBottom: '10px' }}
                 onClick={() => {
                   setDisableStationFrom(true)
                   setDisableStationTo(true)
@@ -190,7 +190,7 @@ export default function Schedule() {
         <div className={disableDate ? 'class-hide' : ''}>
           <div className="date-time-booking auto-w90">
             <DatePicker
-
+              style={{cursor:'pointer'}}
               onSelect={(date) => {
                 setDisableStationFrom(true)
                 setDisableStationTo(true)

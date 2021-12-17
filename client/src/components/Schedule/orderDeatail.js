@@ -56,12 +56,13 @@ export default function OrderDeatail() {
             <thead className="et-table-header">
               <tr>
                 <th className="ng-binding train-in-header" style={{ width: '10%' }}>Mã vé</th>
-                <th className="ng-binding train-in-header" style={{ width: '17%' }}>Họ tên</th>
-                <th className="ng-binding train-in-header" style={{ width: '11%' }}>Mã ghế</th>
-                <th className="ng-binding train-in-header" style={{ width: '10%' }}>Loại ghế</th>
+                <th className="ng-binding train-in-header" style={{ width: '15%' }}>Họ tên</th>
+                <th className="ng-binding train-in-header" style={{ width: '10%' }}>Mã ghế</th>
+                <th className="ng-binding train-in-header" style={{ width: '9%' }}>Loại ghế</th>
                 <th className="ng-binding train-in-header" style={{ width: '7%' }}>Giờ đi</th>
-                <th className="ng-binding train-in-header" style={{ width: '9%' }}>Ngày đi</th>
-                <th className="ng-binding train-in-header" style={{ width: '9%' }}>Ga đi</th>
+                <th className="ng-binding train-in-header" style={{ width: '8%' }}>Ngày đi</th>
+                <th className="ng-binding train-in-header" style={{ width: '8%' }}>Ga đi</th>
+                <th className="ng-binding train-in-header" style={{ width: '9%' }}>Ga đến</th>
                 <th className="ng-binding train-in-header" style={{ width: '10%' }}>Giá vé</th>
                 <th className="ng-binding train-in-header" style={{ width: '8%' }}></th>
               </tr>
@@ -77,6 +78,7 @@ export default function OrderDeatail() {
                     <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.timeStart.split(':')[0] + "h" + item.timeStart.split(':')[1] + "p"}</td>
                     <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.dateStart}</td>
                     <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.stationFrom.name}</td>
+                    <td className="et-table-cell tabl-cell" style={{ textAlign: 'center' }}>{item.stationTo.name}</td>
                     <td className="et-table-cell tabl-cell" style={{ textAlign: 'right' }}>{format_curency(item.price.toString()) + " VND"} </td>
                     <td className="et-table-cell tabl-cell" style={{ textAlign: '' }}>
                       <Popconfirm title="Xác nhận hủy vé" okText="Yes" cancelText="No"

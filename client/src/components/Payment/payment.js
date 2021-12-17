@@ -284,7 +284,13 @@ export default function Payment() {
                     {format_curency(item.priceDiscount.toString()) + " VND"}
                   </td>
                   <td style={{ verticalAlign: 'middle', borderBottom: 'solid 2px #ccc' }}>
-                    <span className="et-btn-cancel" ></span>
+                    <span className="et-btn-cancel"
+                      style={{cursor:'pointer'}}  
+                      onClick={() => {
+                        dataCart.splice(index, 1)
+                        dispatch({ type: 'RELOAD_CART' })
+                      }}
+                    ></span>
                   </td>
                 </tr>
               )
@@ -408,8 +414,8 @@ export default function Payment() {
             }}
             currency='USD'
             total={
-              1
-              // parseInt(dataOrder.totalPrice / 23025)
+              // 1
+              parseInt(totalPrice() / 23025)
             }
             onError={onError}
             onSuccess={onSuccess}
