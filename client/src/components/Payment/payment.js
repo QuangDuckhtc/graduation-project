@@ -76,18 +76,29 @@ export default function Payment() {
   }
   function handleOrderCOD() {
     let err = false;
+    const regEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    const regSDT = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+    const regCMND = /^([0-9]{9})$/;
+    let mesErr = ''
     dataCart.forEach(element => {
-      if (element.customerName.trim() === '' || element.indentityCard.trim() === '') {
+      if (element.customerName.trim().length < 3 || !regCMND.test(element.indentityCard)) {
+        if (element.customerName.trim().length < 3) {
+          mesErr = 'Tên khách đi tàu không hợp lệ'
+        } else {
+          mesErr = 'CNMD khách đi tàu không hợp lệ'
+        }
         err = true
       }
     });
-    const regEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    const regSDT = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
     if (!err) {
-      if (dataOrder.customerName.trim() !== '' && dataOrder.phone.trim() !== '' && dataOrder.email.trim() !== '' && dataOrder.idCard.trim() !== '') {
+      if (dataOrder.customerName.trim().length > 2 && dataOrder.phone.trim() !== '' && dataOrder.email.trim() !== '' && dataOrder.idCard.trim() !== '') {
         if (regSDT.test(dataOrder.phone)) {
           if (regEmail.test(dataOrder.email)) {
-            paymentCOD()
+            if (regCMND.test(dataOrder.idCard)) {
+              setDisable(false)
+            } else {
+              message.error("CMND người đặt không hợp lệ")
+            }
           } else {
             message.error('Email không hợp lệ')
           }
@@ -98,7 +109,7 @@ export default function Payment() {
         message.error('Chưa nhập đủ thông tin người đặt vé')
       }
     } else {
-      message.error('Chưa nhập thông tin khách đi tàu')
+      message.error(mesErr)
     }
   }
   function getDataOrderDefault() {
