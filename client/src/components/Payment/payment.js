@@ -95,7 +95,7 @@ export default function Payment() {
         if (regSDT.test(dataOrder.phone)) {
           if (regEmail.test(dataOrder.email)) {
             if (regCMND.test(dataOrder.idCard)) {
-              setDisable(false)
+              paymentCOD()
             } else {
               message.error("CMND người đặt không hợp lệ")
             }

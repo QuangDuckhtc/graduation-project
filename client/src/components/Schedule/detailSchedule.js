@@ -518,7 +518,7 @@ export default function DetailSchedule() {
                   (dataCarriageDetail?.idShow.includes('NM') ?
                     //  toa ngoi mem *
                     <div>
-                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi 21/11/2020 06:00)</div>
+                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi 21/11/2022 06:00)</div>
                       <div className="row et-car-floor">
                         <div className="et-full-width">
                           <div className="et-car-nm-64-half-block">
@@ -607,7 +607,7 @@ export default function DetailSchedule() {
                     dataCarriageDetail?.idShow.includes('NC') ?
                       //toa ngoi cung
                       <div>
-                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2020 06:00)</div>
+                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
                         <div className="row et-car-floor">
                           <div className="et-full-width">
                             {dataSeat.map((item, index) => {
@@ -676,7 +676,7 @@ export default function DetailSchedule() {
                       dataCarriageDetail?.idShow.includes('N4') ?
                         //toa nam loai 4
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2020 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-16 et-car-floor-full-height">
@@ -768,7 +768,7 @@ export default function DetailSchedule() {
                         </div> :
                         // toa nam loai 6
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2020 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-18 et-car-floor-full-height">
@@ -891,7 +891,7 @@ export default function DetailSchedule() {
                   (dataCarriageDetail1?.idShow.includes('NM') ?
                     //  toa ngoi mem *
                     <div>
-                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi 21/11/2020 06:00)</div>
+                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi 21/11/2022 06:00)</div>
                       <div className="row et-car-floor">
                         <div className="et-full-width">
                           <div className="et-car-nm-64-half-block">
@@ -973,7 +973,7 @@ export default function DetailSchedule() {
                     dataCarriageDetail1?.idShow.includes('NC') ?
                       //toa ngoi cung
                       <div>
-                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2020 06:00)</div>
+                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
                         <div className="row et-car-floor">
                           <div className="et-full-width">
                             {dataSeat1.map((item, index) => {
@@ -1041,7 +1041,7 @@ export default function DetailSchedule() {
                       dataCarriageDetail1?.idShow.includes('N4') ?
                         //toa nam loai 4
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2020 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-16 et-car-floor-full-height">
@@ -1134,7 +1134,7 @@ export default function DetailSchedule() {
                         </div> :
                         // toa nam loai 6
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2020 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-18 et-car-floor-full-height">
