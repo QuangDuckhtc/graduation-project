@@ -92,7 +92,7 @@ export default function Ticket(props) {
           <div className="d-fix">
             <div className="width25percent">
               <div className="padding-5px">
-                <input className="form-control form-group" type="text" placeholder="Mã / Tên / Email / SDT đặt vé"
+                <input className="form-control form-group" type="text" placeholder="Mã / Tên / Ghế / Ngày đặt"
                   onChange={(e) => {
                     setDataSearch(e.target.value)
                   }}

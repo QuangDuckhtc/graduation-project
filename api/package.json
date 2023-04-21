@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thaianh0703/chat-server.git"
+    "url": "git+https://github.com/QuangDuckhtc/chat-server.git"
   },
-  "author": "evans",
+  "author": "kennguyen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/thaianh0703/chat-server/issues"
+    "url": "https://github.com/QuangDuckhtc/chat-server/issues"
   },
-  "homepage": "https://github.com/thaianh0703/chat-server#readme",
+  "homepage": "https://github.com/QuangDuckhtc/chat-server#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",

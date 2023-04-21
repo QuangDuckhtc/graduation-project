@@ -177,6 +177,7 @@ export default function Payment() {
 
   return (
     <div className="container" style={{ marginTop: '-5px', padding: '80px' }}>
+      
       <div className="dayrunto text-center" style={{ width: '100%' }}>Thanh toán</div>
       <div className="row form-group table-responsive list-ticket-deskhop" style={{ margin: 'auto' }}>
         <table className="table table-bordered" style={{ width: '100%', paddingRight: '0' }}>

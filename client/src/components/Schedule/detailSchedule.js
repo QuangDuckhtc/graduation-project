@@ -12,6 +12,14 @@ export default function DetailSchedule() {
 
   const history = useHistory();
   const dispatch = useDispatch();
+  // const [idShowStationFrom,setIdShowStationFrom]= useState(0)
+  // const [idShowStationTo,setIdShowStationTo]= useState(0)
+  // const [idShowStationFrom1,setIdShowStationFrom1]= useState(0)
+  // const [idShowStationTo1,setIdShowStationTo1]= useState(0)
+  // const [idSchedule1,setIdSchedule1] = useState('')
+  // const [idSchedule2,setIdSchedule2] = useState('')
+  // const [idSchedule3,setIdSchedule3] = useState('')
+  // const [idSchedule4,setIdSchedule4] = useState('')
   const dataSchedule = useSelector(state => state.dataSchedule)
   const valueSearch = useSelector(state => state.valueSearch)
   const reloadSeat = useSelector(state => state.reloadSeat)
@@ -132,12 +140,17 @@ export default function DetailSchedule() {
     })
   }
   async function getDataDefault() {
+    console.log(dataSchedule)
     await axios.post('/schedule', { arrData: dataSchedule }
     ).then(async function (res) {
       if (res.data.status === 'success') {
         let price = parseInt(res.data.schedule[0][0].train.carriage[0].unitPrice) * Math.abs(parseInt(res.data.stationFrom.distance) - parseInt(res.data.stationTo.distance))
 
         getDataTicket(res.data.schedule[0][0]._id, res.data.stationFrom.idShow, res.data.stationTo.idShow)
+        // setIdShowStationFrom(res.data.stationFrom.idShow)
+        // setIdShowStationTo(res.data.stationTo.idShow)
+        // setIdSchedule1(res.data.schedule[0][0]._id)
+        // setIdSchedule2(res.data.schedule[0][1]._id)
         setTicket({
           ...ticket,
           idSchedule: res.data.schedule[0][0]._id,
@@ -148,16 +161,16 @@ export default function DetailSchedule() {
           priceDiscount: price > res.data.schedule[0][0].train.carriage[0].minPrice ? price : res.data.schedule[0][0].train.carriage[0].minPrice,
 
           stationFrom: {
-            idShow: res.data.stationFrom.idShow,
-            name: res.data.stationFrom.name,
-            minutes: res.data.stationFrom.minutes,
-            distance: res.data.stationFrom.distance,
+            idShow: dataSchedule.length === 1 ? res.data.stationFrom.idShow :res.data.stationTo.idShow,
+            name: dataSchedule.length === 1 ? res.data.stationFrom.name : res.data.stationTo.name ,
+            minutes:  dataSchedule.length === 1 ? res.data.stationFrom.minutes :res.data.stationTo.minutes,
+            distance:  dataSchedule.length === 1 ? res.data.stationFrom.distance :res.data.stationTo.distance,
           },
           stationTo: {
-            idShow: res.data.stationTo.idShow,
-            name: res.data.stationTo.name,
-            minutes: res.data.stationTo.minutes,
-            distance: res.data.stationTo.distance,
+            idShow: dataSchedule.length === 1 ? res.data.stationTo.idShow : res.data.stationFrom.idShow,
+            name: dataSchedule.length === 1 ? res.data.stationTo.name :res.data.stationFrom.name,
+            minutes: dataSchedule.length === 1 ? res.data.stationTo.minutes:res.data.stationFrom.minutes,
+            distance: dataSchedule.length === 1 ? res.data.stationTo.distance:res.data.stationFrom.distance,
           }
         })
         setDataTrain(res.data.schedule[0]);
@@ -177,6 +190,12 @@ export default function DetailSchedule() {
         let price1 = parseInt(res.data.schedule[1][0].train.carriage[0].unitPrice) * Math.abs(parseInt(res.data.stationFrom.distance) - parseInt(res.data.stationTo.distance))
 
         getDataTicket1(res.data.schedule[1][0]._id, res.data.stationFrom.idShow, res.data.stationTo.idShow)
+        
+        // setIdShowStationFrom1(res.data.stationFrom.idShow)
+        // setIdShowStationTo1(res.data.stationTo.idShow)
+        // setIdSchedule3(res.data.schedule[1][0]._id)
+        // setIdSchedule4(res.data.schedule[1][1]._id)
+
         setTicket1({
           ...ticket1,
           idSchedule: res.data.schedule[1][0]._id,
@@ -184,16 +203,16 @@ export default function DetailSchedule() {
           nameCarriage: res.data.schedule[1][0].train.carriage[0].name,
           dateStart: valueSearch.returnDate,
           timeStart: setRealTime(res.data.schedule[1][0].time, valueSearch.stationFrom.minutesRev),
-          price1: price1 > res.data.schedule[1][0].train.carriage[0].unitPrice ? price1 : res.data.schedule[1][0].train.carriage[0].unitPrice,
+          price: price1 > res.data.schedule[1][0].train.carriage[0].unitPrice ? price1 : res.data.schedule[1][0].train.carriage[0].unitPrice,
           priceDiscount: price1 > res.data.schedule[1][0].train.carriage[0].unitPrice ? price1 : res.data.schedule[1][0].train.carriage[0].unitPrice,
 
-          stationFrom: {
+          stationTo: {
             idShow: res.data.stationTo.idShow,
             name: res.data.stationTo.name,
             minutes: res.data.stationTo.minutes,
             distance: res.data.stationTo.distance,
           },
-          stationTo: {
+          stationFrom: {
             idShow: res.data.stationFrom.idShow,
             name: res.data.stationFrom.name,
             minutes: res.data.stationFrom.minutes,
@@ -334,7 +353,7 @@ export default function DetailSchedule() {
 
   return (
     <div>
-      {console.log(arrTickets)}
+      {/* {console.log(dataSchedule)} */}
       {/* {console.log(dataTrain)} */}
       {/* {console.log(setRealTime('15:00', '37:30'))} */}
       <Banner />
@@ -359,6 +378,7 @@ export default function DetailSchedule() {
                                 idSchedule: item._id,
                                 timeStart: setRealTime(item.time, valueSearch.stationFrom.minutes)
                               })
+                              // getDataTicket((index===0? idSchedule1:idSchedule2),idShowStationFrom,idShowStationTo)
                             }}
                           >
                             <div className={(idex === 0 ? changeTrain0 : changeTrain1) === index ? 'et-train-head backgroud-train-toa' : 'et-train-head'}>
@@ -404,6 +424,7 @@ export default function DetailSchedule() {
                                 idSchedule: item._id,
                                 timeStart: setRealTime(item.time, valueSearch.stationTo.minutesRev)
                               })
+                              // getDataTicket1((index===0 ? idSchedule3 : idSchedule4),idShowStationFrom1,idShowStationTo1)
                             }}
                           >
                             <div className={(idex === 0 ? changeTrain0 : changeTrain1) === index ? 'et-train-head backgroud-train-toa' : 'et-train-head'}>
@@ -518,7 +539,7 @@ export default function DetailSchedule() {
                   (dataCarriageDetail?.idShow.includes('NM') ?
                     //  toa ngoi mem *
                     <div>
-                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi 21/11/2022 06:00)</div>
+                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                       <div className="row et-car-floor">
                         <div className="et-full-width">
                           <div className="et-car-nm-64-half-block">
@@ -547,7 +568,7 @@ export default function DetailSchedule() {
                                   <div className="et-car-seat-right et-seat-h-35">
                                     <div className="et-col-16 et-sit-side" />
                                     <div className="et-col-84 et-sit-sur-outer">
-                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable"
+                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
                                         style={{
                                           background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
                                         }}>
@@ -572,6 +593,7 @@ export default function DetailSchedule() {
                                 index > 19 &&
                                 <div key={index} className="et-car-nm-64-sit ng-isolate-scope" style={{ width: '20%' }}
                                   onClick={() => {
+                                    if (_findIndex(arrTickets, { seat: item }) < 0){
                                     setTicket({
                                       ...ticket,
                                       idShow: item + "-" + new Date().toISOString(),
@@ -584,12 +606,16 @@ export default function DetailSchedule() {
                                       cart.splice(indexCart, 1)
                                       dispatch({ type: 'RELOAD_CART' })
                                     }
+                                  }
                                   }}
                                 >
                                   <div className="et-car-seat-right et-seat-h-35">
                                     <div className="et-col-16 et-sit-side" />
                                     <div className="et-col-84 et-sit-sur-outer">
-                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                         <div className="et-sit-no ng-scope">
                                           <span>{index + 1}</span>
                                         </div>
@@ -607,7 +633,7 @@ export default function DetailSchedule() {
                     dataCarriageDetail?.idShow.includes('NC') ?
                       //toa ngoi cung
                       <div>
-                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
+                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                         <div className="row et-car-floor">
                           <div className="et-full-width">
                             {dataSeat.map((item, index) => {
@@ -615,6 +641,7 @@ export default function DetailSchedule() {
                                 index % 2 === 0 ?
                                   <div className="et-col-1-20 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
+                                      if (_findIndex(arrTickets, { seat: item }) < 0){
                                       setTicket({
                                         ...ticket,
                                         idShow: item + "-" + new Date().toISOString(),
@@ -626,13 +653,16 @@ export default function DetailSchedule() {
                                       } else {
                                         cart.splice(indexCart, 1)
                                         dispatch({ type: 'RELOAD_CART' })
-                                      }
+                                      }}
                                     }}
                                   >
                                     <div className="et-car-seat-left et-seat-h-35">
                                       <div className="et-col-16 et-sit-side" />
                                       <div className="et-col-84 et-sit-sur-outer">
-                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className>{index + 1}</span>
                                           </div>
@@ -642,6 +672,7 @@ export default function DetailSchedule() {
                                   </div> :
                                   <div className="et-col-1-20 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
+                                      if (_findIndex(arrTickets, { seat: item }) < 0){
                                       setTicket({
                                         ...ticket,
                                         idShow: item + "-" + new Date().toISOString(),
@@ -653,12 +684,15 @@ export default function DetailSchedule() {
                                       } else {
                                         cart.splice(indexCart, 1)
                                         dispatch({ type: 'RELOAD_CART' })
-                                      }
+                                      }}
                                     }}
                                   >
                                     <div className="et-car-seat-left et-seat-h-35">
                                       <div className="et-col-84 et-sit-sur-outer">
-                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className>{index + 1}</span>
                                           </div>
@@ -676,7 +710,7 @@ export default function DetailSchedule() {
                       dataCarriageDetail?.idShow.includes('N4') ?
                         //toa nam loai 4
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-16 et-car-floor-full-height">
@@ -698,6 +732,7 @@ export default function DetailSchedule() {
                                   index % 2 === 1 &&
                                   <div className="et-col-1-16 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
+                                      if (_findIndex(arrTickets, { seat: item }) < 0){
                                       setTicket({
                                         ...ticket,
                                         idShow: item + "-" + new Date().toISOString(),
@@ -709,12 +744,15 @@ export default function DetailSchedule() {
                                       } else {
                                         cart.splice(indexCart, 1)
                                         dispatch({ type: 'RELOAD_CART' })
-                                      }
+                                      }}
                                     }}
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope" >
                                             <span className>{index + 1}</span>
                                           </div>
@@ -733,6 +771,7 @@ export default function DetailSchedule() {
                                   index % 2 === 0 &&
                                   <div className="et-col-1-16 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
+                                      if (_findIndex(arrTickets, { seat: item }) < 0){
                                       setTicket({
                                         ...ticket,
                                         idShow: item + "-" + new Date().toISOString(),
@@ -744,12 +783,15 @@ export default function DetailSchedule() {
                                       } else {
                                         cart.splice(indexCart, 1)
                                         dispatch({ type: 'RELOAD_CART' })
-                                      }
+                                      }}
                                     }}
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope" >
                                             <span className>{index + 1}</span>
                                           </div>
@@ -768,7 +810,7 @@ export default function DetailSchedule() {
                         </div> :
                         // toa nam loai 6
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-18 et-car-floor-full-height">
@@ -791,6 +833,7 @@ export default function DetailSchedule() {
                                   (index + 1) % 3 === 2 &&
                                   <div className="et-col-1-16 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
+                                      if (_findIndex(arrTickets, { seat: item }) < 0){
                                       setTicket({
                                         ...ticket,
                                         idShow: item + "-" + new Date().toISOString(),
@@ -803,11 +846,15 @@ export default function DetailSchedule() {
                                         cart.splice(indexCart, 1)
                                         dispatch({ type: 'RELOAD_CART' })
                                       }
+                                    }
                                     }}
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className="ng-binding">{index + 1}</span>
                                           </div>
@@ -825,6 +872,7 @@ export default function DetailSchedule() {
                                   (index + 1) % 3 === 1 &&
                                   <div className="et-col-1-16 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
+                                      if (_findIndex(arrTickets, { seat: item }) < 0){
                                       setTicket({
                                         ...ticket,
                                         idShow: item + "-" + new Date().toISOString(),
@@ -836,12 +884,15 @@ export default function DetailSchedule() {
                                       } else {
                                         cart.splice(indexCart, 1)
                                         dispatch({ type: 'RELOAD_CART' })
-                                      }
+                                      }}
                                     }}
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className="ng-binding">{index + 1}</span>
                                           </div>
@@ -858,6 +909,7 @@ export default function DetailSchedule() {
                                   (index + 1) % 3 === 0 &&
                                   <div className="et-col-1-16 et-seat-h-35 ng-isolate-scope"
                                     onClick={() => {
+                                      if (_findIndex(arrTickets, { seat: item }) < 0){
                                       setTicket({
                                         ...ticket,
                                         idShow: item + "-" + new Date().toISOString(),
@@ -870,11 +922,15 @@ export default function DetailSchedule() {
                                         cart.splice(indexCart, 1)
                                         dispatch({ type: 'RELOAD_CART' })
                                       }
+                                    }
                                     }}
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope" >
                                             <span className="ng-binding">{index + 1}</span>
                                           </div>
@@ -891,7 +947,7 @@ export default function DetailSchedule() {
                   (dataCarriageDetail1?.idShow.includes('NM') ?
                     //  toa ngoi mem *
                     <div>
-                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi 21/11/2022 06:00)</div>
+                      <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow}  - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                       <div className="row et-car-floor">
                         <div className="et-full-width">
                           <div className="et-car-nm-64-half-block">
@@ -917,7 +973,10 @@ export default function DetailSchedule() {
                                   <div className="et-car-seat-right et-seat-h-35">
                                     <div className="et-col-16 et-sit-side" />
                                     <div className="et-col-84 et-sit-sur-outer">
-                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                         <div className="et-sit-no ng-scope">
                                           <span className>{index + 1}</span>
                                         </div>
@@ -955,7 +1014,10 @@ export default function DetailSchedule() {
                                   <div className="et-car-seat-right et-seat-h-35">
                                     <div className="et-col-16 et-sit-side" />
                                     <div className="et-col-84 et-sit-sur-outer">
-                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                      <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                         <div className="et-sit-no ng-scope">
                                           <span>{index + 1}</span>
                                         </div>
@@ -973,7 +1035,7 @@ export default function DetailSchedule() {
                     dataCarriageDetail1?.idShow.includes('NC') ?
                       //toa ngoi cung
                       <div>
-                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
+                        <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                         <div className="row et-car-floor">
                           <div className="et-full-width">
                             {dataSeat1.map((item, index) => {
@@ -998,7 +1060,10 @@ export default function DetailSchedule() {
                                     <div className="et-car-seat-left et-seat-h-35">
                                       <div className="et-col-16 et-sit-side" />
                                       <div className="et-col-84 et-sit-sur-outer">
-                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className>{index + 1}</span>
                                           </div>
@@ -1024,7 +1089,10 @@ export default function DetailSchedule() {
                                   >
                                     <div className="et-car-seat-left et-seat-h-35">
                                       <div className="et-col-84 et-sit-sur-outer">
-                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-sit-sur tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className>{index + 1}</span>
                                           </div>
@@ -1041,7 +1109,7 @@ export default function DetailSchedule() {
                       dataCarriageDetail1?.idShow.includes('N4') ?
                         //toa nam loai 4
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-16 et-car-floor-full-height">
@@ -1079,7 +1147,10 @@ export default function DetailSchedule() {
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className>{index + 1}</span>
                                           </div>
@@ -1114,7 +1185,10 @@ export default function DetailSchedule() {
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className>{index + 1}</span>
                                           </div>
@@ -1134,7 +1208,7 @@ export default function DetailSchedule() {
                         </div> :
                         // toa nam loai 6
                         <div>
-                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi 21/11/2022 06:00)</div>
+                          <div style={{ textAlign: 'center', fontSize: '20px', margin: '10px' }}>{idex === 0 ? dataCarriageDetail.name : dataCarriageDetail1.name} ({idex === 0 ? dataCarriageDetail.idShow : dataCarriageDetail1.idShow} - TG đi {idex ===0  ? valueSearch.startDate: valueSearch.returnDate})</div>
                           <div className="row et-car-floor">
                             <div className="et-col-8-9 mb-w-100">
                               <div className="et-col-1-18 et-car-floor-full-height">
@@ -1173,7 +1247,10 @@ export default function DetailSchedule() {
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className="ng-binding">{index + 1}</span>
                                           </div>
@@ -1201,7 +1278,10 @@ export default function DetailSchedule() {
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className="ng-binding">{index + 1}</span>
                                           </div>
@@ -1228,7 +1308,10 @@ export default function DetailSchedule() {
                                   >
                                     <div className="et-bed-left">
                                       <div className="et-bed-outer">
-                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" style={{ background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : '#fff' }}>
+                                        <div className="et-bed tooltiptop text-center et-sit-avaiable" 
+                                        style={{
+                                          background: _findIndex(cart, { idSeat: item }) > -1 ? '#a6b727' : _findIndex(arrTickets1, { seat: item }) > -1 ? '#df5327' : '#fff'
+                                        }}>
                                           <div className="et-sit-no ng-scope">
                                             <span className="ng-binding">{index + 1}</span>
                                           </div>

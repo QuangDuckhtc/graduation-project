@@ -450,7 +450,7 @@ app.post('/api/ticket', async (req, res) => {
 app.get('/api/ticket', async (req, res) => {
 	let { idSchedule, idStationFrom, idStationTo } = req.query
 	let result = await colTicket.find({
-		idSchedule: idSchedule, $or: [
+		idSchedule: idSchedule,status:{$ne:4} ,$or: [
 			{
 				'stationFrom.idShow': {
 					$gte: parseInt(idStationFrom),
@@ -576,9 +576,8 @@ app.get('/api/ticket-page', async (req, res) => {
 app.get('/api/ticket-search', async (req, res) => {
 	await client.connect()
 	let { page, search } = req.query
-
+	console.log(search)
 	let searchOrder = await colTicket.find({
-
 		$or: [
 			{
 				idShow: {
@@ -605,7 +604,7 @@ app.get('/api/ticket-search', async (req, res) => {
 				}
 			},
 			{
-				date: {
+				dateStart: {
 					"$regex": search,
 					'$options': '$i'
 				}
@@ -640,7 +639,7 @@ app.get('/api/ticket-search', async (req, res) => {
 				}
 			},
 			{
-				date: {
+				dateStart: {
 					"$regex": search,
 					'$options': '$i'
 				}

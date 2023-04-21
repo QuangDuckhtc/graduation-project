@@ -122,7 +122,7 @@ function Home() {
               <option value="" disabled>Ga đi</option>
               {dataStation.map((item, index) => {
                 return (
-                  <option key={index} value={item._id}>{(index + 1) + item.name}</option>
+                  <option key={index} value={item._id}>{ item.name}</option>
                 )
               })}
             </select>
@@ -141,7 +141,7 @@ function Home() {
               <option value="" disabled >Ga đến</option>
               {dataStation.map((item, index) => {
                 return (
-                  <option key={index} value={item._id}>{(index + 1) + item.name}</option>
+                  <option key={index} value={item._id}>{ item.name}</option>
                 )
               })}
             </select>
